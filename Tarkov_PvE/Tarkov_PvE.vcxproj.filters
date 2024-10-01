@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ImGui">
+      <UniqueIdentifier>{d1aea1ad-293d-4510-82c5-3742e4b2d852}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Cheat">
+      <UniqueIdentifier>{5ac2ba7a-9530-4af8-86a2-78bc39728160}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Overlay">
+      <UniqueIdentifier>{b330cae7-633d-4960-b9e5-1a38514c1ba5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{c0bf97c1-6624-4fa5-8a4c-ad0a36752792}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImGui\Font">
+      <UniqueIdentifier>{0f0fd815-a553-4c4b-805a-1dca3cd50a19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils\Memory">
+      <UniqueIdentifier>{b417b0de-6a7a-43b3-b13c-ea33376065cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils\Config">
+      <UniqueIdentifier>{beb893ab-c640-4791-834d-6dc6bd3dc84a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils\SimpleMath">
+      <UniqueIdentifier>{071e8855-2588-457b-a72e-15cf01552126}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK">
+      <UniqueIdentifier>{517b35e9-656f-4525-a856-831752a29270}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\CItem">
+      <UniqueIdentifier>{5c9ca21a-6d27-4459-a393-f06245f08293}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\CExfil">
+      <UniqueIdentifier>{7c772aca-1377-4a21-bc25-d8467651b5d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\CPlayer">
+      <UniqueIdentifier>{98e25a5f-60f2-4bab-8a1f-57062333d13f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\Game">
+      <UniqueIdentifier>{a3ba44ec-3037-4674-bac4-5d20f3916244}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ImGui\Font\RobotoRegular.h">
+      <Filter>ImGui\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\Custom.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imconfig.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui_freetype.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui_impl_dx11.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui_impl_win32.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui_internal.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imstb_rectpack.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imstb_textedit.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imstb_truetype.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Cheat\Cheat.h">
+      <Filter>Cheat</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Memory\Memory.h">
+      <Filter>Utils\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Config\Config.h">
+      <Filter>Utils\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\SimpleMath\SimpleMath.h">
+      <Filter>Utils\SimpleMath</Filter>
+    </ClInclude>
+    <ClInclude Include="Overlay\Overlay.h">
+      <Filter>Overlay</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\CItem\Item.h">
+      <Filter>SDK\CItem</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\CExfil\Exfil.h">
+      <Filter>SDK\CExfil</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\CPlayer\Player.h">
+      <Filter>SDK\CPlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\Game\SDK.h">
+      <Filter>SDK\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\Game\Struct.h">
+      <Filter>SDK\Game</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ImGui\Custom.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_demo.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_draw.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_freetype.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_impl_dx11.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_impl_win32.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_tables.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_widgets.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Cheat\Features.cpp">
+      <Filter>Cheat</Filter>
+    </ClCompile>
+    <ClCompile Include="Cheat\Render.cpp">
+      <Filter>Cheat</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\Memory\Memory.cpp">
+      <Filter>Utils\Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\Config\Config.cpp">
+      <Filter>Utils\Config</Filter>
+    </ClCompile>
+    <ClCompile Include="Overlay\Overlay.cpp">
+      <Filter>Overlay</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="SDK\CItem\Item.cpp">
+      <Filter>SDK\CItem</Filter>
+    </ClCompile>
+    <ClCompile Include="SDK\CExfil\Exfil.cpp">
+      <Filter>SDK\CExfil</Filter>
+    </ClCompile>
+    <ClCompile Include="SDK\CPlayer\Player.cpp">
+      <Filter>SDK\CPlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="SDK\Game\SDK.cpp">
+      <Filter>SDK\Game</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Utils\SimpleMath\SimpleMath.inl">
+      <Filter>Utils\SimpleMath</Filter>
+    </None>
+  </ItemGroup>
+</Project>
