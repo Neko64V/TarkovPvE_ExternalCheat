@@ -14,7 +14,8 @@ SPT-AKI/Escape from Tarkov(PvE) 向けの外部チートです。チート開発
 * ImGuiに最低限のカスタムを施しているので参考にすることも可。（ImGui/Custom.cpp）
 * ある程度フレームワーク化を行ったので、他のゲームのチートへ比較的簡単に転用可能。
 * OpenProcessやショボいオーバーレイを採用しているのでEACやBEのようなアンチチートには対策が必要。
-
+* パフォーマンスやコード類の最適化を一切行っていません。このプロジェクトは現状のまま提供されます。
+ 
 ## 実行
 必要なライブラリは全て揃っているので、VisualStudioでビルドすれば普通に動くはずです。  
 https://learn.microsoft.com/ja-jp/cpp/build/vscpp-step-0-installation?view=msvc-170
