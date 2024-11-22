@@ -1,8 +1,3 @@
-# 更新予定あります
-とりあえずExfil ESPだけ追加します。Item/Grenade ESPももしかしたら。  
-アップデートが必要な場合、私にEscape from Tarkovのコードを送ってください。BANされてEFTにアクセスできません…。
-
-
 ## 概要
 SPT-AKI(3.9.2)やEscape from Tarkov(PvE)向けの外部チートです。チート開発に対する興味を失ったので公開しておきます。  
 必要に応じて更新してください。オフセットは以下の場所にあります。  
@@ -10,6 +5,7 @@ CheatEngine ->Mono -> .Net Info -> Assembly-CSharp -> ClientLocalGameWorld / EFT
 
 ## 機能
 * ESP
+* Exfil ESP
 * MenuKey : INSERT
 
 ## 備考
@@ -34,4 +30,4 @@ https://github.com/microsoft/DirectXTK
 https://github.com/ocornut/imgui  
 
 ## スクリーンショット
-![image](https://github.com/user-attachments/assets/798c5a36-b1c6-417f-a943-ac869f510018)
+![image](https://github.com/user-attachments/assets/0be7e79e-6d53-4963-9b5f-2a2ddf21d969)
