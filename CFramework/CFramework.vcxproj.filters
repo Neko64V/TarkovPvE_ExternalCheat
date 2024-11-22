@@ -40,11 +40,14 @@
     <Filter Include="Cheat\SDK">
       <UniqueIdentifier>{32ca098a-5183-47e8-ae19-3f1ca8e372b6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Cheat\SDK\GameSDK">
-      <UniqueIdentifier>{2294c04f-d365-473c-a496-2ef6fb1ad748}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Cheat\SDK\CPlayer">
       <UniqueIdentifier>{afd37619-aa38-4c63-9a7d-bf8fa35dcf37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Cheat\SDK\CExfil">
+      <UniqueIdentifier>{a6314dac-1980-4bda-8817-6522dcd78c12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Cheat\SDK\GameSDK">
+      <UniqueIdentifier>{0937b057-2557-4187-ba38-4a1ba047f569}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -96,14 +99,17 @@
     <ClCompile Include="Cheat\Visual.cpp">
       <Filter>Cheat</Filter>
     </ClCompile>
-    <ClCompile Include="Cheat\SDK\GameSDK\GameSDK.cpp">
-      <Filter>Cheat\SDK\GameSDK</Filter>
-    </ClCompile>
     <ClCompile Include="Framework\Overlay\Manager.cpp">
       <Filter>Framework\Overlay</Filter>
     </ClCompile>
     <ClCompile Include="Cheat\SDK\CPlayer\CPlayer.cpp">
       <Filter>Cheat\SDK\CPlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="Cheat\SDK\GameSDK\GameSDK.cpp">
+      <Filter>Cheat\SDK\GameSDK</Filter>
+    </ClCompile>
+    <ClCompile Include="Cheat\SDK\CExfil\CExfil.cpp">
+      <Filter>Cheat\SDK\CExfil</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -152,14 +158,17 @@
     <ClInclude Include="Cheat\FrameCore.h">
       <Filter>Cheat</Filter>
     </ClInclude>
-    <ClInclude Include="Cheat\SDK\GameSDK\GameSDK.h">
-      <Filter>Cheat\SDK\GameSDK</Filter>
-    </ClInclude>
     <ClInclude Include="Cheat\SDK\CPlayer\CPlayer.h">
       <Filter>Cheat\SDK\CPlayer</Filter>
     </ClInclude>
+    <ClInclude Include="Cheat\SDK\GameSDK\GameSDK.h">
+      <Filter>Cheat\SDK\GameSDK</Filter>
+    </ClInclude>
     <ClInclude Include="Cheat\SDK\GameSDK\Struct.h">
       <Filter>Cheat\SDK\GameSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Cheat\SDK\CExfil\CExfil.h">
+      <Filter>Cheat\SDK\CExfil</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

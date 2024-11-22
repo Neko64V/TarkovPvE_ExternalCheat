@@ -5,8 +5,9 @@ void CFramework::UpdateList()
     while (g.Run)
     {
         std::vector<CPlayer> _playerlist{};
+        std::vector<CExfil> _exfillist{};
 
-        if (tarkov->Update())
+        if (g.g_ESP && tarkov->Update())
         {
             // Get EntityList
             uintptr_t RegisteredPlayer = m.Read<uintptr_t>(tarkov->m_LocalGameWorld + offset::RegisteredPlayers);
@@ -36,10 +37,30 @@ void CFramework::UpdateList()
 
                 _playerlist.push_back(player);
             }
+
+            // Exfil
+            if (g.g_ExfilESP)
+            {
+                uintptr_t ExfilController = m.Read<uintptr_t>(tarkov->m_LocalGameWorld + offset::ExfilController);
+                uintptr_t ExfilArray = m.Read<uintptr_t>(ExfilController + 0x20);
+
+                for (int j = 0; j < 16; j++)
+                {
+                    CExfil exfil{};
+                    uintptr_t _exfil_addr = m.Read<uintptr_t>(ExfilArray + 0x20 + (j * 0x8));
+
+                    if (!exfil.GetExfil(_exfil_addr) || !exfil.Update())
+                        break;
+
+                    _exfillist.push_back(exfil);
+                }
+            }
         }
 
         EntityList = _playerlist;
+        ExfilList = _exfillist;
         _playerlist.clear();
+        _exfillist.clear();
 
         Sleep(1000);
     }
@@ -101,7 +122,7 @@ void CFramework::GetESPInfo(const int& SpawnType, std::string& vOutStr, ImColor&
         vOutStr = "follower";
         vOutColor = Col_ESP_SpecialScav;
         break;
-    case ASSAULT_SCAV:
+    case NORMAL_SCAV:
         vOutStr = "Scav";
         vOutColor = Col_ESP_Scav;
         break;
@@ -188,6 +209,10 @@ void CFramework::GetESPInfo(const int& SpawnType, std::string& vOutStr, ImColor&
     case PMC_USEC_PvE:
         vOutStr = "USEC";
         vOutColor = Col_ESP_PMC;
+        break;
+    case ASSAULT_SCAV:
+        vOutStr = "Scav++";
+        vOutColor = Col_ESP_Scav;
         break;
     default:
         vOutStr = "InValid";

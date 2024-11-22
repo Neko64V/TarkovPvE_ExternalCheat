@@ -27,8 +27,7 @@ void CFramework::RenderMenu()
 
     ImGui::NewLine();
 
-    for (int i = 0; i < MenuSelectList.size(); i++)
-    {
+    for (int i = 0; i < MenuSelectList.size(); i++) {
         if (ImGui::CustomButton(MenuSelectList[i].c_str(), ImVec2(ImGui::GetContentRegionAvail().x, 35.f), Index == i ? true : false))
             Index = i;
     }
@@ -54,6 +53,7 @@ void CFramework::RenderMenu()
         ImGui::Spacing();
 
         ImGui::Checkbox("ESP", &g.g_ESP);
+        ImGui::Checkbox("Exfil ESP", &g.g_ExfilESP);
 
         ImGui::NewLine();
         ImGui::Spacing();

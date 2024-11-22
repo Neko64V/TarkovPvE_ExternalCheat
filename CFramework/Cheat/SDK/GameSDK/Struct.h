@@ -139,7 +139,7 @@ enum WildSpanwType : int
 	SANITOR_BOSS = 17,
 
 	// Global
-	ASSAULT_SCAV = 19, // è≠Çµã≠âªÇ≥ÇÍÇΩScav (?????
+	NORMAL_SCAV = 19, // è≠Çµã≠âªÇ≥ÇÍÇΩScav (?????
 	CULTIST_01_SCAV = 20,
 	CULTIST_02_SCAV = 21,
 
@@ -177,4 +177,7 @@ enum WildSpanwType : int
 	PMC_BEAR_Old = 48,
 	PMC_BEAR_PvE = 49,
 	PMC_USEC_PvE = 50,
+
+	// Global (?
+	ASSAULT_SCAV = 52	// USëïîıÇíÖÇΩScav
 };

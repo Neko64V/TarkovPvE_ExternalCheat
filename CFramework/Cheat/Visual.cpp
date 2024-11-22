@@ -5,8 +5,8 @@ void CFramework::RenderInfo()
     // ウォーターマーク
     //StringEx(ImVec2(8.f, 8.f), ImColor(1.f, 1.f, 1.f, 1.f), ImGui::GetFontSize(), "Tarkov PvE");
 
-    std::string fps_t = std::to_string(ImGui::GetIO().Framerate) + "FPS";
-    StringEx(ImVec2(8.f, 8.f), ImColor(1.f, 1.f, 1.f, 1.f), ImGui::GetFontSize(), fps_t.c_str());
+    // [ Dev ] FPSを表示
+    StringEx(ImVec2(8.f, 8.f), ImColor(1.f, 1.f, 1.f, 1.f), ImGui::GetFontSize(), std::to_string(ImGui::GetIO().Framerate).c_str());
 
     // Crosshair
     if (g.g_Crosshair)
@@ -38,10 +38,12 @@ void CFramework::RenderESP()
     tarkov->UpdateCamera();
     Matrix ViewMatrix = tarkov->GetViewMatrix(); // WorldToScreenの度に呼び出す必要はない
 
-    std::vector<CPlayer> list = EntityList;
+    // リストをコピー
+    std::vector<CPlayer> _CList = EntityList;
+    std::vector<CExfil> _EList = ExfilList;
 
     // るーぷするよ
-    for (auto& entity : list)
+    for (auto& entity : _CList)
     {
         CPlayer* pEntity = &entity;
 
@@ -161,9 +163,33 @@ void CFramework::RenderESP()
         // Name
         if (g.g_ESP_Name && pEntity->m_pSpawnType != SCAV && pEntity->m_pSpawnType != SNIPER_SCAV)
         {
+            // 不明なSpawnTypeだったら値を表示
             if (!Name.compare("InValid"))
                 Name += "[" + std::to_string(pEntity->m_pSpawnType) + "]";
+
             String(ImVec2(pScreen.x - (ImGui::CalcTextSize(Name.c_str()).x / 2.f), pScreen.y - pHeight - 14.f), ImColor(1.f, 1.f, 1.f, 1.f), Name.c_str());
         }
     }
+
+    // Exfil
+    if (g.g_ExfilESP)
+    {
+        for (auto& exfil : _EList)
+        {
+            CExfil* pExfil = &exfil;
+            Vector2 pExfilScreen{};
+            if (!WorldToScreen(ViewMatrix, Vector2(g.GameRect.right, g.GameRect.bottom), pExfil->m_pVecLocation, pExfilScreen))
+                continue;
+
+            ImColor ExfilColor = pExfil->m_pExfilStatus == NOTREADY ? Col_ESP_ExfilClose : Col_ESP_ExfilOpen;
+
+            std::string exfilText = pExfil->m_pExfilName + " [" + std::to_string((int)GetDistance(pLocal->m_pVecLocation, pExfil->m_pVecLocation)) + "m]";
+
+            ImGui::GetBackgroundDrawList()->AddCircleFilled(ImVec2(pExfilScreen.x, pExfilScreen.y - 2.f), 2.f, ExfilColor, 0.f);
+            String(ImVec2(pExfilScreen.x - (ImGui::CalcTextSize(exfilText.c_str()).x / 2.f), pExfilScreen.y), ExfilColor, exfilText.c_str());
+        }
+    }
+
+    _CList.clear();
+    _EList.clear();
 }

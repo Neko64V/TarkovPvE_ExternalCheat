@@ -139,6 +139,7 @@
   <ItemGroup>
     <ClCompile Include="Cheat\Features.cpp" />
     <ClCompile Include="Cheat\Menu.cpp" />
+    <ClCompile Include="Cheat\SDK\CExfil\CExfil.cpp" />
     <ClCompile Include="Cheat\SDK\CPlayer\CPlayer.cpp" />
     <ClCompile Include="Cheat\SDK\GameSDK\GameSDK.cpp" />
     <ClCompile Include="Cheat\Visual.cpp" />
@@ -159,6 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cheat\FrameCore.h" />
+    <ClInclude Include="Cheat\SDK\CExfil\CExfil.h" />
     <ClInclude Include="Cheat\SDK\CPlayer\CPlayer.h" />
     <ClInclude Include="Cheat\SDK\GameSDK\GameSDK.h" />
     <ClInclude Include="Cheat\SDK\GameSDK\Struct.h" />

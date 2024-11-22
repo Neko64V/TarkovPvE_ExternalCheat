@@ -14,6 +14,7 @@ struct Globals
 
     // Visual
     bool g_ESP      = true;
+    bool g_ExfilESP      = true;
     bool g_ESP_Line      = false;
     bool g_ESP_Box       = true;
     bool g_ESP_BoxFilled = false;

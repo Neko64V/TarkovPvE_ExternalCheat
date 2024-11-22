@@ -7,7 +7,7 @@ namespace offset
 	constexpr auto Tarkov_Camera = 0x179F500;
 	constexpr auto GameObjectManager = 0x17FFD28;
 	
-	// LocalGameWorld
+	// ClientLocalGameWorld
 	constexpr auto ExfilController	 = 0x18;
 	constexpr auto LootList			 = 0xC8;
 	constexpr auto RegisteredPlayers = 0xF0;
