@@ -1,6 +1,7 @@
 ## 概要
-SPT-AKI/Escape from Tarkov(PvE) 向けの外部チートです。チート開発に対する興味を失ったので公開しておきます。  
-肥大化しましたが最低限の機能は備えています。改修するのがめんどくさかったので現状のまま提供されます。
+SPT-AKI(3.9.2)やEscape from Tarkov(PvE)向けの外部チートです。チート開発に対する興味を失ったので公開しておきます。  
+必要に応じて更新してください。オフセットは以下の場所にあります。  
+CheatEngine ->Mono -> .Net Info -> Assembly-CSharp -> ClientLocalGameWorld / EFT.Player
 
 ## 機能
 * ESP
