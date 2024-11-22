@@ -4,9 +4,6 @@ SPT-AKI/Escape from Tarkov(PvE) 向けの外部チートです。チート開発
 
 ## 機能
 * ESP
-* NoRecoil
-* Infinit Stamina
-* NoFall Damage
 * MenuKey : INSERT
 
 ## 備考
@@ -14,8 +11,8 @@ SPT-AKI/Escape from Tarkov(PvE) 向けの外部チートです。チート開発
 * ImGuiに最低限のカスタムを施しているので参考にすることも可。（ImGui/Custom.cpp）
 * ある程度フレームワーク化を行ったので、他のゲームのチートへ比較的簡単に転用可能。
 * OpenProcessやショボいオーバーレイを採用しているのでEACやBEのようなアンチチートには対策が必要。
-* パフォーマンスやコード類の最適化を一切行っていません。このプロジェクトは現状のまま提供されます。
- 
+* CPU使用率がとんでもないことになるので要修正。現在 @Neko64V も修正中です。
+
 ## 実行
 必要なライブラリは全て揃っているので、VisualStudioでビルドすれば普通に動くはずです。  
 https://learn.microsoft.com/ja-jp/cpp/build/vscpp-step-0-installation?view=msvc-170
@@ -29,8 +26,6 @@ https://learn.microsoft.com/ja-jp/cpp/build/vscpp-step-0-installation?view=msvc-
 https://github.com/microsoft/DirectXTK  
 * ImGui  
 https://github.com/ocornut/imgui  
-* FreeType  
-https://github.com/freetype/freetype  
 
 ## スクリーンショット
 ![image](https://github.com/user-attachments/assets/798c5a36-b1c6-417f-a943-ac869f510018)
