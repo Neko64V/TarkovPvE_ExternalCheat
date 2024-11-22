@@ -1,5 +1,8 @@
 ## 概要
-SPT-AKI(3.9.2)やEscape from Tarkov(PvE)向けの外部チートです。チート開発に対する興味を失ったので公開しておきます。  
+SPT-AKI(3.9.2)やEscape from Tarkov(PvE)向けの外部チートです。  
+チート開発に対する興味を失ったので公開しておきます。
+
+## 使用
 EFTのPvEで使用する場合、BattlEyeを無効化してください。  
 また、必要に応じて更新してください。オフセットは以下の場所にあります。  
 CheatEngine ->Mono -> .Net Info -> Assembly-CSharp -> ClientLocalGameWorld / EFT.Player
@@ -10,11 +13,7 @@ CheatEngine ->Mono -> .Net Info -> Assembly-CSharp -> ClientLocalGameWorld / EFT
 * MenuKey : INSERT
 
 ## 備考
-* メニューにImGuiを採用、ESP等のレンダリングもImGuiのDrawListを使用。
-* ImGuiに最低限のカスタムを施しているので参考にすることも可。（ImGui/Custom.cpp）
-* ある程度フレームワーク化を行ったので、他のゲームのチートへ比較的簡単に転用可能。
-* OpenProcessやショボいオーバーレイを採用しているのでEACやBEのようなアンチチートには対策が必要。
-* CPU使用率がとんでもないことになるので要修正。現在 @Neko64V も修正中です。
+* マップによってCPU使用率がとんでもないことになるので要修正。現在 @Neko64V も修正中です。
 
 ## 実行
 必要なライブラリは全て揃っているので、VisualStudioでビルドすれば普通に動くはずです。  
