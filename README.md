@@ -1,6 +1,7 @@
 ## 概要
 SPT-AKI(3.9.2)やEscape from Tarkov(PvE)向けの外部チートです。チート開発に対する興味を失ったので公開しておきます。  
-必要に応じて更新してください。オフセットは以下の場所にあります。  
+EFTのPvEで使用する場合、BattlEyeを無効化してください。  
+また、必要に応じて更新してください。オフセットは以下の場所にあります。  
 CheatEngine ->Mono -> .Net Info -> Assembly-CSharp -> ClientLocalGameWorld / EFT.Player
 
 ## 機能
