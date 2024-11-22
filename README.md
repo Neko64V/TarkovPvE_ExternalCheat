@@ -1,5 +1,7 @@
 # 更新予定あります
-とりあえずExfil ESPだけ追加します。Item/Grenade ESPももしかしたら。
+とりあえずExfil ESPだけ追加します。Item/Grenade ESPももしかしたら。  
+アップデートが必要な場合、私にEscape from Tarkovのコードを送ってください。BANされてEFTにアクセスできません…。
+
 
 ## 概要
 SPT-AKI(3.9.2)やEscape from Tarkov(PvE)向けの外部チートです。チート開発に対する興味を失ったので公開しておきます。  
