@@ -5,6 +5,7 @@ SPT-AKI 3.9.XやEFT(PvE)向けの外部チートです。チート開発に対�
 ## 機能
 * ESP
 * Exfil ESP
+* Item ESP（Commented & WIP）
 * MenuKey : INSERT
 
 ## 備考
