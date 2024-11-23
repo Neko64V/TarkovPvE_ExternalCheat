@@ -12,6 +12,8 @@ namespace offset
 	constexpr auto LootList			 = 0xC8;
 	constexpr auto RegisteredPlayers = 0xF0;
 
+	constexpr auto GrenadeList = 0x1A8; // Dev
+
 	// EFT.Player
 	constexpr auto WeaponAnimation  = 0x1C0;
 	constexpr auto Profile			= 0x5C0;

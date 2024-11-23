@@ -3,10 +3,8 @@
 void CFramework::RenderInfo()
 {
     // ウォーターマーク
-    //StringEx(ImVec2(8.f, 8.f), ImColor(1.f, 1.f, 1.f, 1.f), ImGui::GetFontSize(), "Tarkov PvE");
-
-    // [ Dev ] FPSを表示
-    StringEx(ImVec2(8.f, 8.f), ImColor(1.f, 1.f, 1.f, 1.f), ImGui::GetFontSize(), std::to_string(ImGui::GetIO().Framerate).c_str());
+    std::string InfoText = "Tarkov PvE | " + std::to_string((int)ImGui::GetIO().Framerate) + "FPS";
+    StringEx(ImVec2(8.f, 8.f), ImColor(1.f, 1.f, 1.f, 1.f), ImGui::GetFontSize(), InfoText.c_str());
 
     // Crosshair
     if (g.g_Crosshair && !local.IsAiming())
@@ -19,8 +17,9 @@ void CFramework::RenderInfo()
             ImGui::GetBackgroundDrawList()->AddLine(ImVec2(Center.x, Center.y - g.g_CrosshairSize), ImVec2(Center.x, (Center.y + g.g_CrosshairSize) + 1), CrosshairColor, 1);
         }   break;
         case 1:
-            ImGui::GetBackgroundDrawList()->AddCircleFilled(ImVec2((float)g.GameRect.right / 2.f, (float)g.GameRect.bottom / 2.f), g.g_CrosshairSize + 1, ImColor(0.f, 0.f, 0.f, 1.f), NULL);
-            ImGui::GetBackgroundDrawList()->AddCircleFilled(ImVec2((float)g.GameRect.right / 2.f, (float)g.GameRect.bottom / 2.f), g.g_CrosshairSize, CrosshairColor, NULL);
+            ImGui::GetBackgroundDrawList()->AddCircle(ImVec2((float)g.GameRect.right / 2.f, (float)g.GameRect.bottom / 2.f), g.g_CrosshairSize, CrosshairColor, NULL);
+            //ImGui::GetBackgroundDrawList()->AddCircleFilled(ImVec2((float)g.GameRect.right / 2.f, (float)g.GameRect.bottom / 2.f), g.g_CrosshairSize + 1, ImColor(0.f, 0.f, 0.f, 1.f), NULL);
+            //ImGui::GetBackgroundDrawList()->AddCircleFilled(ImVec2((float)g.GameRect.right / 2.f, (float)g.GameRect.bottom / 2.f), g.g_CrosshairSize, CrosshairColor, NULL);
             break;
         }
     }
@@ -41,6 +40,7 @@ void CFramework::RenderESP()
     // リストをコピー
     std::vector<CPlayer> _CList = EntityList;
     std::vector<CExfil> _EList = ExfilList;
+    //std::vector<CItem> _IList = ItemList;
 
     // るーぷするよ
     for (auto& entity : _CList)
@@ -189,7 +189,26 @@ void CFramework::RenderESP()
             String(ImVec2(pExfilScreen.x - (ImGui::CalcTextSize(exfilText.c_str()).x / 2.f), pExfilScreen.y), ExfilColor, exfilText.c_str());
         }
     }
+    /*
+    // Item
+    for (auto& item : _IList)
+    {
+        CItem* pItem = &item;
+        
+        float ItemDistance = GetDistance(pLocal->m_pVecLocation, pItem->m_pVecLocation);
+
+        // Distance Check
+
+
+        Vector2 pItemScreen{};
+        if (!WorldToScreen(ViewMatrix, Vector2(g.GameRect.right, g.GameRect.bottom), pItem->m_pVecLocation, pItemScreen))
+            continue;
+
+        ImGui::GetBackgroundDrawList()->AddCircleFilled(ImVec2(pItemScreen.x, pItemScreen.y - 2.f), 2.f, ImColor(1.f, 1.f, 1.f, 1.f), 0.f);
+        String(ImVec2(pItemScreen.x - (ImGui::CalcTextSize("Item").x / 2.f), pItemScreen.y), ImColor(1.f, 1.f, 1.f, 1.f), "Item");
+    }*/
 
     _CList.clear();
     _EList.clear();
+    //_IList.clear();
 }

@@ -46,8 +46,11 @@
     <Filter Include="Cheat\SDK\CExfil">
       <UniqueIdentifier>{a6314dac-1980-4bda-8817-6522dcd78c12}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Cheat\SDK\CItem">
+      <UniqueIdentifier>{90d19cbc-e194-4714-b59b-34cf9d2bf64f}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Cheat\SDK\GameSDK">
-      <UniqueIdentifier>{0937b057-2557-4187-ba38-4a1ba047f569}</UniqueIdentifier>
+      <UniqueIdentifier>{c2a6f7bc-fc36-46f5-8697-b1e2b32653ee}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -105,11 +108,14 @@
     <ClCompile Include="Cheat\SDK\CPlayer\CPlayer.cpp">
       <Filter>Cheat\SDK\CPlayer</Filter>
     </ClCompile>
+    <ClCompile Include="Cheat\SDK\CExfil\CExfil.cpp">
+      <Filter>Cheat\SDK\CExfil</Filter>
+    </ClCompile>
     <ClCompile Include="Cheat\SDK\GameSDK\GameSDK.cpp">
       <Filter>Cheat\SDK\GameSDK</Filter>
     </ClCompile>
-    <ClCompile Include="Cheat\SDK\CExfil\CExfil.cpp">
-      <Filter>Cheat\SDK\CExfil</Filter>
+    <ClCompile Include="Cheat\SDK\CItem\CItem.cpp">
+      <Filter>Cheat\SDK\CItem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -161,14 +167,17 @@
     <ClInclude Include="Cheat\SDK\CPlayer\CPlayer.h">
       <Filter>Cheat\SDK\CPlayer</Filter>
     </ClInclude>
+    <ClInclude Include="Cheat\SDK\CExfil\CExfil.h">
+      <Filter>Cheat\SDK\CExfil</Filter>
+    </ClInclude>
     <ClInclude Include="Cheat\SDK\GameSDK\GameSDK.h">
       <Filter>Cheat\SDK\GameSDK</Filter>
     </ClInclude>
     <ClInclude Include="Cheat\SDK\GameSDK\Struct.h">
       <Filter>Cheat\SDK\GameSDK</Filter>
     </ClInclude>
-    <ClInclude Include="Cheat\SDK\CExfil\CExfil.h">
-      <Filter>Cheat\SDK\CExfil</Filter>
+    <ClInclude Include="Cheat\SDK\CItem\CItem.h">
+      <Filter>Cheat\SDK\CItem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

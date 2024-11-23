@@ -5,6 +5,7 @@
 #include "../Framework/ImGui/Custom.h"
 #include "SDK/CPlayer/CPlayer.h"
 #include "SDK/CExfil/CExfil.h"
+#include "SDK/CItem/CItem.h"
 
 class CFramework
 {
@@ -20,6 +21,7 @@ private:
     CPlayer local;
     std::vector<CPlayer> EntityList;
     std::vector<CExfil> ExfilList;
+    //std::vector<CItem> ItemList;
 
     // Colors
     ImColor Col_ESP_PMC = { 1.f, 0.f, 0.85f, 1.f };

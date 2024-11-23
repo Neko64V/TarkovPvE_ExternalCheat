@@ -35,6 +35,7 @@ void CFramework::UpdateList()
     {
         std::vector<CPlayer> _playerlist{};
         std::vector<CExfil> _exfillist{};
+        //std::vector<CItem> _itemlist{};
 
         if (g.g_ESP && tarkov->Update())
         {
@@ -84,12 +85,30 @@ void CFramework::UpdateList()
                     _exfillist.push_back(exfil);
                 }
             }
+
+            // Item
+            /*
+            uintptr_t LootList = m.Read<uintptr_t>(tarkov->m_LocalGameWorld + offset::LootList);
+            UnityList ItemArray = m.Read<UnityList>(LootList + 0x10);
+
+            for (int k = 0; k < ItemArray.count; k++)
+            {
+                CItem item{};
+                uintptr_t i_entity = m.Read<uintptr_t>(ItemArray.ptr + 0x20 + (k * 0x8));
+
+                if (!item.GetItem(i_entity) || !item.Update())
+                    continue;
+
+                _itemlist.push_back(item);
+            }*/
         }
 
         EntityList = _playerlist;
         ExfilList = _exfillist;
+        //ItemList = _itemlist;
         _playerlist.clear();
         _exfillist.clear();
+        //_itemlist.clear();
 
         Sleep(1000);
     }
