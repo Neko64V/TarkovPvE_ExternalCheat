@@ -26,6 +26,9 @@ struct Globals
     float g_ESP_MaxDistance = 1500.f;
    
     // Misc
+    bool g_NoSway     = false;
+    bool g_InfStamina = true;
+    bool g_NoFallDmg  = true;
 
 
     // System

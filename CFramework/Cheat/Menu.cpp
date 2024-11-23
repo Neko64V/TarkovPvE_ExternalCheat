@@ -71,7 +71,9 @@ void CFramework::RenderMenu()
         ImGui::Checkbox("HealthBar", &g.g_ESP_HealthBar);
         break;
     case 1: // Misc
-      
+        ImGui::Checkbox("NoSway", &g.g_NoSway);
+        ImGui::Checkbox("Inf. Stamina", &g.g_InfStamina);
+        ImGui::Checkbox("No FallDamage", &g.g_NoFallDmg);
         break;
     case 2: // System
         ImGui::Text("System");

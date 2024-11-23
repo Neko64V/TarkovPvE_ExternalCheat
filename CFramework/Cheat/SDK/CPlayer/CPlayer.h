@@ -21,5 +21,7 @@ public:
     // Functions
     bool GetEntity(uintptr_t& address);
 	bool Update();
+	uintptr_t GetWeaponAnimation();
+	bool IsAiming();
 	Vector3 GetBonePosition(int BoneId);
 };

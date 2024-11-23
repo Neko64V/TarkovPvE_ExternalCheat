@@ -9,7 +9,7 @@ void CFramework::RenderInfo()
     StringEx(ImVec2(8.f, 8.f), ImColor(1.f, 1.f, 1.f, 1.f), ImGui::GetFontSize(), std::to_string(ImGui::GetIO().Framerate).c_str());
 
     // Crosshair
-    if (g.g_Crosshair)
+    if (g.g_Crosshair && !local.IsAiming())
     {
         switch (g.g_CrosshairType)
         {

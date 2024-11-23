@@ -13,6 +13,7 @@ public:
 	void RenderInfo();
 	void RenderMenu();
 	void RenderESP();
+    void MiscAll();
     ~CFramework();
 private:
     EFT* tarkov = new EFT();

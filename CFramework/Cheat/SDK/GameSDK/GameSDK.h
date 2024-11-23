@@ -13,7 +13,9 @@ namespace offset
 	constexpr auto RegisteredPlayers = 0xF0;
 
 	// EFT.Player
+	constexpr auto WeaponAnimation  = 0x1C0;
 	constexpr auto Profile			= 0x5C0;
+	constexpr auto Physics			= 0x5D0;
 	constexpr auto HealthController = 0x600;
 };
 

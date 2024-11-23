@@ -64,6 +64,16 @@ void CPlayer::UpdateBone()
 	}
 }
 
+uintptr_t  CPlayer::GetWeaponAnimation()
+{
+	return m.Read<uintptr_t>(ptr + offset::WeaponAnimation);
+}
+
+bool  CPlayer::IsAiming()
+{
+	return m.Read<bool>(GetWeaponAnimation() + 0x1bd);
+}
+
 Vector3 CPlayer::GetBonePosition(int BoneId)
 {
 	uintptr_t BasicBoneBase = m.Read<uintptr_t>(m_pBoneMatrix + 0x20 + (BoneId * 0x8));

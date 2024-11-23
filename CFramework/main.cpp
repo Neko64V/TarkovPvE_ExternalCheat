@@ -44,6 +44,7 @@ void Overlay::OverlayLoop()
 			DispatchMessage(&msg);
 		}
 
+		cx->MiscAll();
 		OverlayManager();
 
 		ImGui_ImplDX11_NewFrame();
@@ -64,6 +65,6 @@ void Overlay::OverlayLoop()
 		g_pd3dDeviceContext->ClearRenderTargetView(g_mainRenderTargetView, clear_color_with_alpha);
 		ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
-		g_pSwapChain->Present(1, 0);
+		g_pSwapChain->Present(0, 0);
 	}
 }

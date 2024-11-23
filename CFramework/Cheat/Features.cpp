@@ -1,5 +1,34 @@
 #include "FrameCore.h"
 
+void CFramework::MiscAll()
+{
+    uintptr_t LocalAddr = local.ptr;
+
+    // BasePointer
+    uintptr_t WeaponAnimation = m.Read<uintptr_t>(LocalAddr + offset::WeaponAnimation);
+    uintptr_t Physics = m.Read<uintptr_t>(LocalAddr + offset::Physics);
+
+    uintptr_t BreathEffector = m.Read<uintptr_t>(WeaponAnimation + 0x28);
+    uintptr_t Stamina = m.Read<uintptr_t>(Physics + 0x38);
+
+    // No Recoil/Sway
+    if (g.g_NoSway) {
+        m.Write<int>(WeaponAnimation + 0x138, 1);
+        m.Write<float>(BreathEffector + 0xa4, 0.001f);
+    }
+
+    // InfStamina
+    if (g.g_InfStamina && m.Read<float>(Stamina + 0x48) < 85.f)
+        m.Write<float>(Stamina + 0x48, 90.f);
+
+    // NoFall Damage
+    if (g.g_NoFallDmg && m.Read<float>(Physics + 0xBC) != 0.f)
+        m.Write<float>(Physics + 0xBC, 0.f);
+
+    // **SilentAim** ‚ÉŽg‚¦‚»‚¤
+    //Vector3 shotDirection = m.Read<Vector3>(WeaponAnimation + 0x224);
+}
+
 void CFramework::UpdateList()
 {
     while (g.Run)
