@@ -1,5 +1,5 @@
 ## 概要
-SPT-AKIやEFT(PvE)向けの外部チートです。チート開発に対する興味を失ったので公開しておきます。  
+SPT-AKI 3.9.XやEFT(PvE)向けの外部チートです。チート開発に対する興味を失ったので公開しておきます。  
 モダンなGUIメニューやビジュアルを兼ね備えています。研究、分析、学習や調査用にもどうぞ。
 
 ## 機能
@@ -25,7 +25,7 @@ https://github.com/microsoft/DirectXTK
 https://github.com/ocornut/imgui  
 
 ## アップデート
-少なくともLive EFT非対応、SPT-AKI 3.9.2 に対応しています。  
+少なくともLive EFTは非対応、SPT-AKI 3.9.X に対応しています。  
 GameObjectManagerは滅多に更新されないので基本的にはオフセットのアップデートのみ必要です。  
 CheatEngine ->Mono -> .Net Info -> Assembly-CSharp -> ClientLocalGameWorld / EFT.Player
 ![image](https://github.com/user-attachments/assets/97fe9626-4269-443e-97a6-9cc145b6d698)
