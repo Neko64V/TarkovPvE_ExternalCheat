@@ -239,8 +239,12 @@ void CFramework::GetESPInfo(const int& SpawnType, std::string& vOutStr, ImColor&
         vOutStr = "USEC";
         vOutColor = Col_ESP_PMC;
         break;
-    case ASSAULT_SCAV:
-        vOutStr = "Scav++";
+    case ASSAULT_SCAV_RU:
+        vOutStr = "Scav+";
+        vOutColor = Col_ESP_Scav;
+        break;
+    case ASSAULT_SCAV_UN:
+        vOutStr = "Scav+";
         vOutColor = Col_ESP_Scav;
         break;
     default:

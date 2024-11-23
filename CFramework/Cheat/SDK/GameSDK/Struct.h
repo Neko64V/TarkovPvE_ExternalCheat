@@ -179,5 +179,6 @@ enum WildSpanwType : int
 	PMC_USEC_PvE = 50,
 
 	// Global (?
-	ASSAULT_SCAV = 52	// US‘•”õ‚ð’…‚½Scav
+	ASSAULT_SCAV_RU = 51,		// RU - Scav
+	ASSAULT_SCAV_UN = 52	// US - Scav
 };

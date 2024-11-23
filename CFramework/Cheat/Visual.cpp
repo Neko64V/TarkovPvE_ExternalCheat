@@ -161,7 +161,7 @@ void CFramework::RenderESP()
             HealthBar(pScreen.x - pWidth - 4.f, pScreen.y, 2.f, -pHeight, pEntity->m_pHealth, pEntity->m_pHealthMax);
 
         // Name
-        if (g.g_ESP_Name && pEntity->m_pSpawnType != SCAV && pEntity->m_pSpawnType != SNIPER_SCAV)
+        if (g.g_ESP_Name && pEntity->m_pSpawnType != SCAV && pEntity->m_pSpawnType != SNIPER_SCAV && pEntity->m_pSpawnType != NORMAL_SCAV)
         {
             // 不明なSpawnTypeだったら値を表示
             if (!Name.compare("InValid"))
