@@ -7,15 +7,13 @@ namespace offset
 	constexpr auto Tarkov_Camera = 0x179F500;
 	constexpr auto GameObjectManager = 0x17FFD28;
 	
-	// ClientLocalGameWorld - SPT
+	// EFT.GameWorld
 	constexpr auto ExfilController	 = 0x18;
 	constexpr auto LootList			 = 0xC8;
 	constexpr auto RegisteredPlayers = 0xF0;
 	constexpr auto GrenadeList		 = 0x1A0;
 
-	// 慣性：#define inertia_chain { 0x28 、0x58 、0x120 、0x10 、0xe8 }    
-
-	// EFT.Player - SPT
+	// EFT.Player
 	constexpr auto PlayerBody = 0xA8;
 	constexpr auto WeaponAnimation  = 0x1C0;
 	constexpr auto Profile			= 0x5C0;
