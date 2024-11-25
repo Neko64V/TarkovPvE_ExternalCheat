@@ -12,12 +12,11 @@ bool CPlayer::GetEntity(uintptr_t& address)
 bool CPlayer::Update()
 {
 	// BoneMatrix
-	m_pBoneMatrix = m.ReadChain(ptr, { 0xA8, 0x28, 0x28, 0x10 });
+	m_pBoneMatrix = m.ReadChain(ptr, { offset::PlayerBody, 0x28, 0x28, 0x10 });
 
 	// Position
 	m_pVecLocation = GetBonePosition(Base);
 
-	// ESP•\Ž¦‚³‚ê‚È‚­‚È‚é ToDo
 	if (Vec3_Empty(m_pVecLocation))
 		return false;
 

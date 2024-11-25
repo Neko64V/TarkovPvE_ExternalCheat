@@ -4,6 +4,8 @@ void CFramework::MiscAll()
 {
     uintptr_t LocalAddr = local.ptr;
 
+    m.Write<bool>(LocalAddr + 0x818, false);
+
     // BasePointer
     uintptr_t WeaponAnimation = m.Read<uintptr_t>(LocalAddr + offset::WeaponAnimation);
     uintptr_t Physics = m.Read<uintptr_t>(LocalAddr + offset::Physics);
@@ -31,58 +33,66 @@ void CFramework::MiscAll()
 
 void CFramework::UpdateList()
 {
-    while (g.Run)
+    // 仮のリスト用変数
+    std::vector<CPlayer>    list_player{};
+    std::vector<CExfil>     list_exfil{};
+    std::vector<CItem>      list_item{};
+    std::vector<uintptr_t>  list_grenade{};
+
+    while (g.process_active)
     {
-        std::vector<CPlayer> _playerlist{};
-        std::vector<CExfil> _exfillist{};
-        //std::vector<CItem> _itemlist{};
+        Sleep(1000);
+        printf("Run!\n");
 
         if (g.g_ESP && tarkov->Update())
         {
-            // Get EntityList
-            uintptr_t RegisteredPlayer = m.Read<uintptr_t>(tarkov->m_LocalGameWorld + offset::RegisteredPlayers);
-            UnityList _entitylist = m.Read<UnityList>(RegisteredPlayer + 0x10);
+            // PlayerList
+            const auto registered_player = m.Read<uintptr_t>(tarkov->GetLocalGameWorld() + offset::RegisteredPlayers);
+            const auto entity_array = m.Read<UnityList>(registered_player + 0x10);
 
-            if (_entitylist.ptr == 0 || _entitylist.count <= 0) {
-                Sleep(500);
+            if (entity_array.count <= 0)
                 continue;
-            } 
-
-            // Get Local
-            uintptr_t _local = m.Read<uintptr_t>(_entitylist.ptr + 0x20);
-
-            if (!local.GetEntity(_local) || !local.Update()) {
-                Sleep(500);
+            else if (entity_array.ctx == 0)
                 continue;
-            }
-
-            // ESP用EntityListを構築
-            for (int i = 1; i < _entitylist.count; i++)
+            
+            
+            auto local_addr = m.Read<uintptr_t>(entity_array.ctx + 0x20);
+            
+            if (local.GetEntity(local_addr) && local.Update())
             {
-                CPlayer player{};
-                uintptr_t _entity = m.Read<uintptr_t>(_entitylist.ptr + 0x20 + (i * 0x8));
+                // ESP用EntityListを構築
+                for (auto ent = 1; ent < entity_array.count; ent++)
+                {
+                    CPlayer player{};
+                    uintptr_t player_addr = m.Read<uintptr_t>(entity_array.ctx + 0x20 + (ent * 0x8));
 
-                if (!player.GetEntity(_entity))
-                    continue;
+                    if (!player.GetEntity(player_addr))
+                        continue;
 
-                _playerlist.push_back(player);
+                    list_player.push_back(player);
+                }
+            }
+            else {
+                continue;
             }
 
             // Exfil
-            if (g.g_ExfilESP)
+            if (g.g_ESP_Exfil)
             {
-                uintptr_t ExfilController = m.Read<uintptr_t>(tarkov->m_LocalGameWorld + offset::ExfilController);
-                uintptr_t ExfilArray = m.Read<uintptr_t>(ExfilController + 0x20);
+                const auto exfil_controller = m.Read<uintptr_t>(tarkov->GetLocalGameWorld() + offset::ExfilController);
+                const auto exfil_array = m.Read<uintptr_t>(exfil_controller + 0x20);
 
-                for (int j = 0; j < 16; j++)
+                for (auto j = 0; j < 12; j++)
                 {
                     CExfil exfil{};
-                    uintptr_t _exfil_addr = m.Read<uintptr_t>(ExfilArray + 0x20 + (j * 0x8));
+                    auto exfil_addr = m.Read<uintptr_t>(exfil_array + 0x20 + (j * 0x8));
 
-                    if (!exfil.GetExfil(_exfil_addr) || !exfil.Update())
+                    if (exfil.GetExfil(exfil_addr) && exfil.Update()) {
+                        list_exfil.push_back(exfil);
+                    } 
+                    else {
                         break;
-
-                    _exfillist.push_back(exfil);
+                    } 
                 }
             }
 
@@ -101,16 +111,34 @@ void CFramework::UpdateList()
 
                 _itemlist.push_back(item);
             }*/
+
+            // GrenadeList
+            const auto grenade_class = m.Read<uintptr_t>(tarkov->GetLocalGameWorld() + 0x1A0);
+            const auto grenade_array_ptr = m.Read<uintptr_t>(grenade_class + 0x18);
+            const auto grenade_array = m.Read<UnityList>(grenade_array_ptr + 0x10);
+
+            for (auto g = 0; g < grenade_array.count; g++)
+            {
+                uintptr_t grenade_addr = m.Read<uintptr_t>(grenade_array.ctx+ 0x20 + (g * 0x8));
+
+                if (grenade_addr != NULL)
+                    list_grenade.push_back(grenade_addr);
+            }
+        }
+        else
+        {
+            continue;
         }
 
-        EntityList = _playerlist;
-        ExfilList = _exfillist;
+        EntityList = list_player;
+        ExfilList = list_exfil;
         //ItemList = _itemlist;
-        _playerlist.clear();
-        _exfillist.clear();
-        //_itemlist.clear();
+        GrenadeList = list_grenade;
 
-        Sleep(1000);
+        list_player.clear();
+        list_exfil.clear();
+        //_itemlist.clear();
+        list_grenade.clear();
     }
 }
 
@@ -242,14 +270,6 @@ void CFramework::GetESPInfo(const int& SpawnType, std::string& vOutStr, ImColor&
         vOutStr = "Bloodhound";
         vOutColor = Col_ESP_SpecialScav;
         break;
-    case PMC_USEC_Old:
-        vOutStr = "USEC";
-        vOutColor = Col_ESP_PMC;
-        break;
-    case PMC_BEAR_Old:
-        vOutStr = "BEAR";
-        vOutColor = Col_ESP_PMC;
-        break;
     case PMC_BEAR_PvE:
         vOutStr = "BEAR";
         vOutColor = Col_ESP_PMC;
@@ -257,14 +277,6 @@ void CFramework::GetESPInfo(const int& SpawnType, std::string& vOutStr, ImColor&
     case PMC_USEC_PvE:
         vOutStr = "USEC";
         vOutColor = Col_ESP_PMC;
-        break;
-    case ASSAULT_SCAV_RU:
-        vOutStr = "Scav+";
-        vOutColor = Col_ESP_Scav;
-        break;
-    case ASSAULT_SCAV_UN:
-        vOutStr = "Scav+";
-        vOutColor = Col_ESP_Scav;
         break;
     default:
         vOutStr = "InValid";

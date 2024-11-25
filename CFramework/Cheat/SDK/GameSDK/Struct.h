@@ -10,7 +10,7 @@ struct Matrix34
 
 struct UnityList
 {
-	uintptr_t ptr   = 0x10;
+	uintptr_t ctx   = 0x10;
 	int count		= 0x18;
 };
 
@@ -108,6 +108,7 @@ enum SkeletonBoneID : int
 	CRightPalm = 11
 };
 
+// SPT
 enum WildSpanwType : int
 {
 	// Scav
@@ -173,8 +174,6 @@ enum WildSpanwType : int
 	BTR_VEHICLE = 46,
 
 	// Player
-	PMC_USEC_Old = 47,
-	PMC_BEAR_Old = 48,
 	PMC_BEAR_PvE = 49,
 	PMC_USEC_PvE = 50,
 

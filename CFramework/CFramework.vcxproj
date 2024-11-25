@@ -24,7 +24,7 @@
     <ProjectGuid>{e70bcf62-457c-4e1e-9cf0-35e8988f1b0a}</ProjectGuid>
     <RootNamespace>CFramework</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>CFramework_Dev</ProjectName>
+    <ProjectName>Tarkov_SPT</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

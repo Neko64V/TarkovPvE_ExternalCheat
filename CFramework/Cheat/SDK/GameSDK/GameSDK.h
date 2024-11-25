@@ -7,14 +7,16 @@ namespace offset
 	constexpr auto Tarkov_Camera = 0x179F500;
 	constexpr auto GameObjectManager = 0x17FFD28;
 	
-	// ClientLocalGameWorld
+	// ClientLocalGameWorld - SPT
 	constexpr auto ExfilController	 = 0x18;
 	constexpr auto LootList			 = 0xC8;
 	constexpr auto RegisteredPlayers = 0xF0;
+	constexpr auto GrenadeList		 = 0x1A0;
 
-	constexpr auto GrenadeList = 0x1A8; // Dev
+	// 慣性：#define inertia_chain { 0x28 、0x58 、0x120 、0x10 、0xe8 }    
 
-	// EFT.Player
+	// EFT.Player - SPT
+	constexpr auto PlayerBody = 0xA8;
 	constexpr auto WeaponAnimation  = 0x1C0;
 	constexpr auto Profile			= 0x5C0;
 	constexpr auto Physics			= 0x5D0;
@@ -29,12 +31,13 @@ private:
 	uintptr_t m_fpsCamera;
 public:
 	Matrix	  m_ViewMatrix{};
-	uintptr_t m_LocalGameWorld;
+	uintptr_t m_localGameWorld;
 
 	bool InitAddress();
 	bool Update();
 	bool UpdateCamera();
 	Matrix GetViewMatrix();
+	uintptr_t GetLocalGameWorld();
 };
 
 extern bool Vec3_Empty(const Vector3& value);

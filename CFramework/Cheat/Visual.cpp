@@ -30,26 +30,27 @@ void CFramework::RenderESP()
     // Localの更新
     CPlayer* pLocal = &local;
    
-    if (!pLocal->Update())
-        return;
+    //if (!pLocal->Update())
+        //return;
 
     // ViewMatrix
     tarkov->UpdateCamera();
     Matrix ViewMatrix = tarkov->GetViewMatrix(); // WorldToScreenの度に呼び出す必要はない
 
-    // リストをコピー
-    std::vector<CPlayer> _CList = EntityList;
-    std::vector<CExfil> _EList = ExfilList;
-    //std::vector<CItem> _IList = ItemList;
-
+    // コピー用変数
+    std::vector<CPlayer>    list_player = EntityList;
+    std::vector<CExfil>     list_exfil  = ExfilList;
+    std::vector<CItem>      list_item{};
+    std::vector<uintptr_t>  list_grenade= GrenadeList;
+    
     // るーぷするよ
-    for (auto& entity : _CList)
+    for (auto& entity : list_player)
     {
         CPlayer* pEntity = &entity;
 
         if (!pEntity->Update())
             continue;
-
+        
         // 距離を算出
         float Distance = GetDistance(pLocal->m_pVecLocation, pEntity->m_pVecLocation);
 
@@ -86,7 +87,7 @@ void CFramework::RenderESP()
         // Line
         if (g.g_ESP_Line)
             DrawLine(ImVec2(g.GameRect.right / 2.f, g.GameRect.bottom), ImVec2(pScreen.x, pScreen.y), pColor, 1.f);
-
+        
         // 2D Box
         if (g.g_ESP_Box)
         {
@@ -121,7 +122,7 @@ void CFramework::RenderESP()
         }
 
         // Skeleton - 上のUpdate()で必要なBoneを全て読み取りここで再構築を行う。少し複雑。
-        if (g.g_ESP_Skeleton && 400.f > Distance) // パフォーマンスの都合上400m以上先のプレイヤーはスキップ
+        if (g.g_ESP_Skeleton && 350.f > Distance) // パフォーマンスの都合上400m以上先のプレイヤーはスキップ
         {
             // BoneList
             Vector3 list[][2] = { 
@@ -172,11 +173,12 @@ void CFramework::RenderESP()
     }
 
     // Exfil
-    if (g.g_ExfilESP)
+    if (g.g_ESP_Exfil)
     {
-        for (auto& exfil : _EList)
+        for (auto& exfil : ExfilList)
         {
             CExfil* pExfil = &exfil;
+
             Vector2 pExfilScreen{};
             if (!WorldToScreen(ViewMatrix, Vector2(g.GameRect.right, g.GameRect.bottom), pExfil->m_pVecLocation, pExfilScreen))
                 continue;
@@ -208,7 +210,29 @@ void CFramework::RenderESP()
         String(ImVec2(pItemScreen.x - (ImGui::CalcTextSize("Item").x / 2.f), pItemScreen.y), ImColor(1.f, 1.f, 1.f, 1.f), "Item");
     }*/
 
-    _CList.clear();
-    _EList.clear();
-    //_IList.clear();
+    // Grenade
+    for (auto& grenade : GrenadeList)
+    {
+        uintptr_t TransformInternal = m.ReadChain(grenade, { 0x10, 0x30, 0x30, 0x8, 0x28, 0x10 });
+        Vector3 m_pVecLocation = GetTransformPosition(TransformInternal);
+
+        if (Vec3_Empty(m_pVecLocation))
+            continue; 
+
+        float gDistance = GetDistance(pLocal->m_pVecLocation, m_pVecLocation);
+
+        if (gDistance > 100.f)
+            continue;
+        else if (gDistance < 10.f)
+            String(ImVec2(g.GameRect.right / 2.f - (ImGui::CalcTextSize("[ WARNING ] Grenade!!").x / 2.f), g.GameRect.bottom / 2.f), ImColor(1.f, 0.f, 0.f, 1.f), "[ WARNING ] Grenade!!");
+
+
+        Vector2 pGrenadeRoot{};
+        if (!WorldToScreen(ViewMatrix, Vector2(g.GameRect.right, g.GameRect.bottom), m_pVecLocation, pGrenadeRoot))
+            continue;
+
+        std::string gre_tx = "Grenade [" + std::to_string(int(gDistance)) + "m]";
+        ImGui::GetBackgroundDrawList()->AddCircleFilled(ImVec2(pGrenadeRoot.x, pGrenadeRoot.y), 2.f, ImColor(1.f, 0.f, 0.f, 1.f), 0.f);
+        String(ImVec2(pGrenadeRoot.x - (ImGui::CalcTextSize(gre_tx.c_str()).x / 2.f), pGrenadeRoot.y - 13.f), ImColor(1.f, 0.f, 0.f, 1.f), gre_tx.c_str());
+    }
 }

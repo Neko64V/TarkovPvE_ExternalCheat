@@ -53,7 +53,7 @@ void CFramework::RenderMenu()
         ImGui::Spacing();
 
         ImGui::Checkbox("ESP", &g.g_ESP);
-        ImGui::Checkbox("Exfil ESP", &g.g_ExfilESP);
+        ImGui::Checkbox("Exfil ESP", &g.g_ESP_Exfil);
 
         ImGui::NewLine();
         ImGui::Spacing();
@@ -152,11 +152,23 @@ void CFramework::RenderMenu()
        
         break;
     case 2: // System
+        ImGui::Text("Restart");
+        ImGui::Separator();
+        ImGui::Spacing();
+        if (ImGui::Button("Restart", ImVec2(ImGui::GetContentRegionAvail().x, 30.f))) {
+            tarkov->m_localGameWorld = 0;
+            tarkov->InitAddress();
+        }
+
+        ImGui::NewLine();
+        ImGui::Separator();
+        ImGui::NewLine();
+
         ImGui::Text("Exit");
         ImGui::Separator();
         ImGui::Spacing();
         if (ImGui::Button("Exit", ImVec2(ImGui::GetContentRegionAvail().x, 30.f)))
-            g.Run = false;
+            g.process_active = false;
         break;
     default:
         break;

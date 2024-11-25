@@ -9,7 +9,7 @@ bool CExfil::GetExfil(uintptr_t& address)
 bool CExfil::Update()
 {
 	// Status
-	m_pExfilStatus = m.Read<int>(ptr + 0xA8);
+	m_pExfilStatus = m.Read<int>(ptr + 0xA8); 
 
 	if (m_pExfilStatus == CLOSE)
 		return false;

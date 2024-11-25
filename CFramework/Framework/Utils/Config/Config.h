@@ -4,7 +4,7 @@
 struct Globals
 {
     // System
-    bool Run = true;
+    bool process_active = true;
     bool ShowMenu = false;
 
     // GameWindow Data
@@ -14,7 +14,8 @@ struct Globals
 
     // Visual
     bool g_ESP      = true;
-    bool g_ExfilESP      = true;
+    bool g_ESP_Exfil      = true;
+    bool g_ESP_Grenade   = true;
     bool g_ESP_Line      = false;
     bool g_ESP_Box       = true;
     bool g_ESP_BoxFilled = false;
@@ -23,7 +24,7 @@ struct Globals
     bool g_ESP_Name      = true;
     bool g_ESP_HealthBar = true;
     int  g_ESP_BoxStyle  = 1;
-    float g_ESP_MaxDistance = 1500.f;
+    float g_ESP_MaxDistance = 750.f;
    
     // Misc
     bool g_NoSway     = false;
@@ -33,7 +34,7 @@ struct Globals
 
     // System
     bool g_StreamProof = false;
-    bool g_Crosshair = false;
+    bool g_Crosshair = true;
     int g_CrosshairSize = 3;
     int g_CrosshairType = 0;
 

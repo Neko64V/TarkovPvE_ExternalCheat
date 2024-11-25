@@ -1,8 +1,8 @@
 #include "Cheat/FrameCore.h"
 #include "Framework/Overlay/Overlay.h"
 
-Overlay*	ov = new Overlay;
-CFramework* cx = new CFramework;
+Overlay*	C_Overlay = new Overlay;
+CFramework* C_Tarkov = new CFramework;
 
 // DEBUG時にはコンソールウィンドウを表示する
 #if _DEBUG
@@ -19,24 +19,24 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		return 1;
 
 	// Overlay
-	if (!ov->InitOverlay("EscapeFromTarkov", InitMode::WINDOW_TITLE)) // MemoryInitModeと同様
+	if (!C_Overlay->InitOverlay("EscapeFromTarkov", InitMode::WINDOW_TITLE)) // MemoryInitModeと同様
 		return 2;
 
 	// スレッドを作成
-	std::thread([&]() { cx->UpdateList(); }).detach();
+	std::thread([&]() { C_Tarkov->UpdateList(); }).detach();
 
-	ov->OverlayLoop();
-	ov->DestroyOverlay();
+	C_Overlay->OverlayLoop();
+	C_Overlay->DestroyOverlay();
 	m.DetachProcess();
-	g.Run = false;
-	delete cx, ov;
+	g.process_active = false;
+	delete C_Tarkov, C_Overlay;
 
 	return 0;
 }
 
 void Overlay::OverlayLoop()
 {
-	while (g.Run)
+	while (g.process_active)
 	{
 		MSG msg;
 		while (PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE)) {
@@ -44,7 +44,7 @@ void Overlay::OverlayLoop()
 			DispatchMessage(&msg);
 		}
 
-		cx->MiscAll();
+		C_Tarkov->MiscAll();
 		OverlayManager();
 
 		ImGui_ImplDX11_NewFrame();
@@ -52,12 +52,12 @@ void Overlay::OverlayLoop()
 		ImGui::NewFrame();
 
 		if (g.ShowMenu)
-			cx->RenderMenu();
+			C_Tarkov->RenderMenu();
 
-		cx->RenderInfo();
+		C_Tarkov->RenderInfo();
 
 		if (g.g_ESP)
-			cx->RenderESP();
+			C_Tarkov->RenderESP();
 
 		ImGui::Render();
 		const float clear_color_with_alpha[4] = { 0.f, 0.f, 0.f, 0.f };

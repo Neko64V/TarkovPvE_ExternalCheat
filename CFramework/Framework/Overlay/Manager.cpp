@@ -46,7 +46,7 @@ void Overlay::OverlayManager()
     // Window Check
     HWND CheckHwnd = FindWindowA(TargetClass, NULL);
     if (!CheckHwnd) {
-        g.Run = false;
+        g.process_active = false;
         return;
     }
 

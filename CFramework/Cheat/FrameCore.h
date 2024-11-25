@@ -22,6 +22,7 @@ private:
     std::vector<CPlayer> EntityList;
     std::vector<CExfil> ExfilList;
     //std::vector<CItem> ItemList;
+    std::vector<uintptr_t> GrenadeList;
 
     // Colors
     ImColor Col_ESP_PMC = { 1.f, 0.f, 0.85f, 1.f };

@@ -141,9 +141,9 @@ bool EFT::InitAddress()
 bool EFT::Update()
 {
 	// LocalGameWorld
-	m_LocalGameWorld = m.ReadChain(m_GameWorld, { 0x30, 0x18, 0x28 });
+	m_localGameWorld = m.ReadChain(m_GameWorld, { 0x30, 0x18, 0x28 });
 
-	if (m_LocalGameWorld == 0) {
+	if (m_localGameWorld == 0) {
 		if (!InitAddress())
 			return false;
 	}
@@ -188,4 +188,9 @@ Matrix EFT::GetViewMatrix()
 	uintptr_t viewmatrix_ptr = m.Read<uintptr_t>(dw + 0x18);
 
 	return m.Read<Matrix>(viewmatrix_ptr + 0xDC);
+}
+
+uintptr_t EFT::GetLocalGameWorld()
+{
+	return this->m_localGameWorld;
 }
