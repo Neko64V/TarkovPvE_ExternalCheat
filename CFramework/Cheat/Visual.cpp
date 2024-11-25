@@ -30,8 +30,8 @@ void CFramework::RenderESP()
     // Localの更新
     CPlayer* pLocal = &local;
    
-    //if (!pLocal->Update())
-        //return;
+    if (!pLocal->Update())
+        return;
 
     // ViewMatrix
     tarkov->UpdateCamera();
@@ -225,7 +225,6 @@ void CFramework::RenderESP()
             continue;
         else if (gDistance < 10.f)
             String(ImVec2(g.GameRect.right / 2.f - (ImGui::CalcTextSize("[ WARNING ] Grenade!!").x / 2.f), g.GameRect.bottom / 2.f), ImColor(1.f, 0.f, 0.f, 1.f), "[ WARNING ] Grenade!!");
-
 
         Vector2 pGrenadeRoot{};
         if (!WorldToScreen(ViewMatrix, Vector2(g.GameRect.right, g.GameRect.bottom), m_pVecLocation, pGrenadeRoot))
