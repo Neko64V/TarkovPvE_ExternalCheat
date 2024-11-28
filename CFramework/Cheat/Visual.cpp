@@ -59,10 +59,14 @@ void CFramework::RenderESP()
             continue;
 
         // WorldToScreen
-        Vector2 pScreen{}, pHead{}, pNeck{};
-        if (!WorldToScreen(ViewMatrix, Vector2(g.GameRect.right, g.GameRect.bottom), pEntity->m_pVecLocation, pScreen) ||
-            !WorldToScreen(ViewMatrix, Vector2(g.GameRect.right, g.GameRect.bottom), pEntity->m_pBoneList[1], pHead) || 
-            !WorldToScreen(ViewMatrix, Vector2(g.GameRect.right, g.GameRect.bottom), pEntity->m_pBoneList[2], pNeck))
+        Vector2 pScreen{}, pHead{}, pNeck{};;
+        if (!WorldToScreen(ViewMatrix, Vector2(g.GameRect.right, g.GameRect.bottom), pEntity->m_pVecLocation, pScreen))
+            continue;
+
+        // WorldToScreen
+        pEntity->UpdateBone();
+        if (!WorldToScreen(ViewMatrix, Vector2(g.GameRect.right, g.GameRect.bottom), pEntity->m_pHeadLocation, pHead) ||
+            !WorldToScreen(ViewMatrix, Vector2(g.GameRect.right, g.GameRect.bottom), pEntity->m_pNeckLocation, pNeck))
             continue;
 
         // 各種サイズの算出等
@@ -126,10 +130,10 @@ void CFramework::RenderESP()
         {
             // BoneList
             Vector3 list[][2] = { 
-                { pEntity->m_pBoneList[CNeck], pEntity->m_pBoneList[CPelvis] }, 
-                { pEntity->m_pBoneList[CNeck], pEntity->m_pBoneList[CLeftForearm] },
+                { pEntity->m_pNeckLocation, pEntity->m_pBoneList[CPelvis] }, 
+                { pEntity->m_pNeckLocation, pEntity->m_pBoneList[CLeftForearm] },
                 { pEntity->m_pBoneList[CLeftForearm], pEntity->m_pBoneList[CLeftPalm] },
-                { pEntity->m_pBoneList[CNeck], pEntity->m_pBoneList[CRightForearm] },
+                { pEntity->m_pNeckLocation, pEntity->m_pBoneList[CRightForearm] },
                 { pEntity->m_pBoneList[CRightForearm], pEntity->m_pBoneList[CRightPalm] },
                 { pEntity->m_pBoneList[CPelvis], pEntity->m_pBoneList[CLeftThigh] },
                 { pEntity->m_pBoneList[CLeftThigh], pEntity->m_pBoneList[CLeftFoot] },
@@ -158,9 +162,11 @@ void CFramework::RenderESP()
         }
 
         // Healthbar
-        if (g.g_ESP_HealthBar)
+        if (g.g_ESP_HealthBar) {
+            pEntity->UpdateHealth();
             HealthBar(pScreen.x - pWidth - 4.f, pScreen.y, 2.f, -pHeight, pEntity->m_pHealth, pEntity->m_pHealthMax);
-
+        }
+        
         // Name
         if (g.g_ESP_Name && pEntity->m_pSpawnType != SCAV && pEntity->m_pSpawnType != SNIPER_SCAV && pEntity->m_pSpawnType != NORMAL_SCAV)
         {
@@ -193,8 +199,9 @@ void CFramework::RenderESP()
             if (!WorldToScreen(ViewMatrix, Vector2(g.GameRect.right, g.GameRect.bottom), pItem->m_pVecLocation, pItemScreen))
                 continue;
 
-            ImGui::GetBackgroundDrawList()->AddCircleFilled(ImVec2(pItemScreen.x, pItemScreen.y - 2.f), 2.f, ImColor(1.f, 1.f, 1.f, 1.f), 0.f);
-            String(ImVec2(pItemScreen.x - (ImGui::CalcTextSize(pItem->m_iName.c_str()).x / 2.f), pItemScreen.y), ImColor(1.f, 1.f, 1.f, 1.f), pItem->m_iName.c_str());
+            std::string vItemTx = pItem->m_iName + "[" + std::to_string((int)ItemDistance) + "m]";
+            ImGui::GetBackgroundDrawList()->AddCircleFilled(ImVec2(pItemScreen.x, pItemScreen.y - 2.f), 2.f, Col_ESP_RareItem, 0.f);
+            String(ImVec2(pItemScreen.x - (ImGui::CalcTextSize(vItemTx.c_str()).x / 2.f), pItemScreen.y), Col_ESP_RareItem, vItemTx.c_str());
         }
     }
 

@@ -24,6 +24,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	// スレッドを作成
 	std::thread([&]() { C_Tarkov->UpdateList(); }).detach();
+	std::thread([&]() { C_Tarkov->UpdateStaticList(); }).detach();
 
 	C_Overlay->OverlayLoop();
 	C_Overlay->DestroyOverlay();

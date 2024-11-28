@@ -1,6 +1,6 @@
 #include "CPlayer.h"
 
-std::vector<int> PlayerBoneList = { CGameBoneID::Base, CGameBoneID::Head, CGameBoneID::Neck, CGameBoneID::Pelvis, CGameBoneID::LeftThigh, CGameBoneID::LeftFoot, CGameBoneID::RightThigh,
+std::vector<int> PlayerBoneList = { CGameBoneID::Pelvis, CGameBoneID::LeftThigh, CGameBoneID::LeftFoot, CGameBoneID::RightThigh,
 									CGameBoneID::RightFoot, CGameBoneID::LeftForearm, CGameBoneID::LeftPalm, CGameBoneID::RightForearm, CGameBoneID::RightPalm };
 
 bool CPlayer::GetEntity(uintptr_t& address)
@@ -19,9 +19,6 @@ bool CPlayer::Update()
 
 	if (Vec3_Empty(m_pVecLocation))
 		return false;
-
-	UpdateHealth(); // HP
-	UpdateBone();	// Bone
 
 	// Pointer
 	uintptr_t Profile = m.Read<uintptr_t>(ptr + offset::Profile);
@@ -52,6 +49,9 @@ void CPlayer::UpdateHealth()
 
 void CPlayer::UpdateBone()
 {
+	m_pHeadLocation = GetBonePosition(Head);
+	m_pNeckLocation = GetBonePosition(Neck);
+
 	for (auto& id : PlayerBoneList)
 	{
 		Vector3 bone = GetBonePosition(id);

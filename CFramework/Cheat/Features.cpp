@@ -30,14 +30,10 @@ void CFramework::UpdateList()
 {
     // âºÇÃÉäÉXÉgópïœêî
     std::vector<CPlayer>    list_player{};
-    std::vector<CExfil>     list_exfil{};
-    std::vector<CItem>      list_item{};
     std::vector<uintptr_t>  list_grenade{};
 
     while (g.process_active)
     {
-        Sleep(1000);
-
         if (g.g_ESP && tarkov->Update())
         {
             // PlayerList
@@ -66,30 +62,47 @@ void CFramework::UpdateList()
                         list_player.push_back(player);
                 }
             }
-            else {
-                continue;
-            }
 
-            // Exfil
-            if (g.g_ESP_Exfil)
+            // GrenadeList
+            if (g.g_ESP_Grenade)
             {
-                const auto exfil_controller = m.Read<uintptr_t>(tarkov->GetLocalGameWorld() + offset::ExfilController);
-                const auto exfil_array = m.Read<uintptr_t>(exfil_controller + 0x20);
+                const auto grenade_class = m.Read<uintptr_t>(tarkov->GetLocalGameWorld() + offset::GrenadeList);
+                const auto grenade_array_ptr = m.Read<uintptr_t>(grenade_class + 0x18);
+                const auto grenade_array = m.Read<UnityList>(grenade_array_ptr);
 
-                for (auto j = 0; j < 12; j++)
+                for (auto g = 0; g < grenade_array.count; g++)
                 {
-                    CExfil exfil{};
-                    auto exfil_addr = m.Read<uintptr_t>(exfil_array + 0x20 + (j * 0x8));
+                    uintptr_t grenade_addr = m.Read<uintptr_t>(grenade_array.ctx + 0x20 + (g * 0x8));
 
-                    if (exfil.GetExfil(exfil_addr) && exfil.Update()) {
-                        list_exfil.push_back(exfil);
-                    } 
-                    else {
-                        break;
-                    } 
+                    if (grenade_addr != NULL)
+                        list_grenade.push_back(grenade_addr);
                 }
             }
+        } 
+        else {
+            std::this_thread::sleep_for(std::chrono::seconds(3));
+            continue;
+        }
 
+        EntityList = list_player;
+        GrenadeList = list_grenade;
+
+        list_player.clear();
+        list_grenade.clear();
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(250));
+    }
+}
+
+void CFramework::UpdateStaticList()
+{
+    while (g.process_active)
+    {
+        std::vector<CItem>  list_item{};
+        std::vector<CExfil> list_exfil{};
+
+        if (tarkov->Update())
+        {
             // ItemList
             if (g.g_ESP_Item)
             {
@@ -107,37 +120,39 @@ void CFramework::UpdateList()
                     list_item.push_back(item);
                 }
             }
-           
-            // GrenadeList
-            if (g.g_ESP_Grenade)
+            
+            // Exfil
+            if (g.g_ESP_Exfil)
             {
-                const auto grenade_class = m.Read<uintptr_t>(tarkov->GetLocalGameWorld() + offset::GrenadeList);
-                const auto grenade_array_ptr = m.Read<uintptr_t>(grenade_class + 0x18);
-                const auto grenade_array = m.Read<UnityList>(grenade_array_ptr);
+                const auto exfil_controller = m.Read<uintptr_t>(tarkov->GetLocalGameWorld() + offset::ExfilController);
+                const auto exfil_array = m.Read<uintptr_t>(exfil_controller + 0x20);
 
-                for (auto g = 0; g < grenade_array.count; g++)
+                for (auto j = 0; j < 12; j++)
                 {
-                    uintptr_t grenade_addr = m.Read<uintptr_t>(grenade_array.ctx + 0x20 + (g * 0x8));
+                    CExfil exfil{};
+                    auto exfil_addr = m.Read<uintptr_t>(exfil_array + 0x20 + (j * 0x8));
 
-                    if (grenade_addr != NULL)
-                        list_grenade.push_back(grenade_addr);
+                    if (exfil.GetExfil(exfil_addr) && exfil.Update()) {
+                        list_exfil.push_back(exfil);
+                    }
+                    else {
+                        break;
+                    }
                 }
             }
         }
-        else
-        {
+        else {
+            std::this_thread::sleep_for(std::chrono::seconds(3));
             continue;
         }
 
-        EntityList = list_player;
-        ExfilList = list_exfil;
         ItemList = list_item;
-        GrenadeList = list_grenade;
+        ExfilList = list_exfil;
 
-        list_player.clear();
-        list_exfil.clear();
         list_item.clear();
-        list_grenade.clear();
+        list_exfil.clear();
+
+        std::this_thread::sleep_for(std::chrono::seconds(15));
     }
 }
 

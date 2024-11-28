@@ -136,6 +136,12 @@ void CFramework::RenderMenu()
         }
         if (ImGui::TreeNode("Game"))
         {
+            ImGui::Text("[+] Item");
+            ImGui::ColorEdit4("Rare", &Col_ESP_RareItem.Value.x);
+            
+            ImGui::NewLine();
+            ImGui::Spacing();
+
             ImGui::Text("[+] Exfil");
             ImGui::ColorEdit4("Open", &Col_ESP_ExfilOpen.Value.x);
             ImGui::ColorEdit4("Close", &Col_ESP_ExfilClose.Value.x);

@@ -144,8 +144,10 @@ bool EFT::Update()
 	m_localGameWorld = m.ReadChain(m_gameWorld, { 0x30, 0x18, 0x28 });
 
 	if (m_localGameWorld == 0) {
-		if (!InitAddress())
+		if (!InitAddress()) {
+			std::this_thread::sleep_for(std::chrono::seconds(3));
 			return false;
+		}
 	}
 
 	return true;

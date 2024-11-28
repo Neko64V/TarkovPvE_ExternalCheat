@@ -11,6 +11,7 @@ class CFramework
 {
 public:
     void UpdateList();
+    void UpdateStaticList();
 	void RenderInfo();
 	void RenderMenu();
 	void RenderESP();
@@ -35,6 +36,8 @@ private:
 
     ImColor Col_ESP_ExfilOpen = { 0.f, 1.f, 0.f, 0.5f };
     ImColor Col_ESP_ExfilClose = { 1.f, 0.3f, 0.f, 0.5f };
+
+    ImColor Col_ESP_RareItem = { 1.f, 0.f, 0.f, 0.9f };
 
     ImColor CrosshairColor = { 0.f, 1.f, 0.f, 1.f };
 

@@ -4,8 +4,7 @@
 class CPlayer
 {
 private:
-	void UpdateHealth();
-	void UpdateBone();
+	
 public:
     uintptr_t ptr;
 
@@ -16,7 +15,12 @@ public:
 	float m_pHealthMax;
 	int m_pSpawnType;
 	Vector3 m_pVecLocation;
+	Vector3 m_pHeadLocation;
+	Vector3 m_pNeckLocation;
 	std::vector<Vector3> m_pBoneList;
+
+	void UpdateHealth();
+	void UpdateBone();
 
     // Functions
     bool GetEntity(uintptr_t& address);

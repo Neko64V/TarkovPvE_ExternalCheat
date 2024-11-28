@@ -95,18 +95,15 @@ enum CGameBoneID : int
 
 enum SkeletonBoneID : int
 {
-	CBase = 0,
-	CHead = 1,
-	CNeck = 2,
-	CPelvis = 3,
-	CLeftThigh = 4,
-	CLeftFoot = 5,
-	CRightThigh = 6,
-	CRightFoot = 7,
-	CLeftForearm = 8,
-	CLeftPalm = 9,
-	CRightForearm = 10,
-	CRightPalm = 11
+	CPelvis = 0,
+	CLeftThigh = 1,
+	CLeftFoot = 2,
+	CRightThigh = 3,
+	CRightFoot = 4,
+	CLeftForearm = 5,
+	CLeftPalm = 6,
+	CRightForearm = 7,
+	CRightPalm = 8
 };
 
 // SPT

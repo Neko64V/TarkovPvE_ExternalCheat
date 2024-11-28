@@ -60,12 +60,20 @@ public:
 
 		return !!::ReadProcessMemory(pHandle, LPCVOID(address), buffer, size, &size_read) && size_read > 0;
 	}
-	std::string ReadString(ULONG64 address, int length)
+	std::string ReadString(uintptr_t address, int length)
 	{
 		static char Buffer[256]{};
 		ReadProcessMemory(pHandle, (void*)(address), Buffer, length, nullptr);
 		
 		return std::string(Buffer);
+	};
+
+	wchar_t* ReadWString(uintptr_t address, int length)
+	{
+		wchar_t Buffer[256]{};
+		ReadProcessMemory(pHandle, (void*)(address), Buffer, (length * 2), nullptr);
+
+		return Buffer;
 	};
 };
 
