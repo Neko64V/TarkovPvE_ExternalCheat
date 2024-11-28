@@ -2,21 +2,13 @@
 
 // ImGui::Combo/ImGui::List等で使う文字列群
 const char* BoxTypeList[] = { "Simple", "Cornered" };
-const char* AimTypeList[] = { "FOV", "Distance" };
-const char* AimModeList[] = { "Memory", "Mouse" };
-const char* AimBoneList[] = { "Head", "Chest" };
-const char* AimKeyTypeList[] = { "and", "or" };
 const char* CrosshairList[] = { "Cross", "Circle" };
 std::vector<std::string> MenuSelectList = { "Visual", "Misc", "System" };
 
 void CFramework::RenderMenu()
 {
     // Setup
-    ImVec4* colors = ImGui::GetStyle().Colors;
-    ImGuiStyle& style = ImGui::GetStyle();
-    static float DefaultSpacing = style.ItemSpacing.y;
     static int Index = 0;
-    static int BindingID = 0;
 
     ImGui::SetNextWindowBgAlpha(0.975f);
     ImGui::SetNextWindowSize(ImVec2(725.f, 450.f));
@@ -53,7 +45,9 @@ void CFramework::RenderMenu()
         ImGui::Spacing();
 
         ImGui::Checkbox("ESP", &g.g_ESP);
+        ImGui::Checkbox("Item ESP", &g.g_ESP_Item);
         ImGui::Checkbox("Exfil ESP", &g.g_ESP_Exfil);
+        ImGui::Checkbox("Grenade ESP", &g.g_ESP_Grenade);
 
         ImGui::NewLine();
         ImGui::Spacing();
@@ -114,7 +108,8 @@ void CFramework::RenderMenu()
         ImGui::Separator();
         ImGui::Spacing();
 
-        ImGui::CustomSliderFloat("Distance", "##Dist", &g.g_ESP_MaxDistance, 100.f, 2000.f);
+        ImGui::CustomSliderFloat("Player", "##Dist", &g.g_ESP_MaxDistance, 100.f, 2000.f);
+        ImGui::CustomSliderFloat("Item", "##ItemDist", &g.g_ESP_MaxItemDistance, 10.f, 1000.f);
 
         ImGui::Spacing();
         ImGui::Spacing();
@@ -152,18 +147,6 @@ void CFramework::RenderMenu()
        
         break;
     case 2: // System
-        ImGui::Text("Restart");
-        ImGui::Separator();
-        ImGui::Spacing();
-        if (ImGui::Button("Restart", ImVec2(ImGui::GetContentRegionAvail().x, 30.f))) {
-            tarkov->m_localGameWorld = 0;
-            tarkov->InitAddress();
-        }
-
-        ImGui::NewLine();
-        ImGui::Separator();
-        ImGui::NewLine();
-
         ImGui::Text("Exit");
         ImGui::Separator();
         ImGui::Spacing();

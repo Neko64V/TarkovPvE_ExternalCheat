@@ -33,6 +33,7 @@ public:
 	bool AttachProcess(const std::string targetName, int mode);
 	void DetachProcess();
 
+	// R/WPM Templates
 	template <typename T>
 	constexpr const T Read(const uintptr_t& address) const noexcept
 	{
@@ -40,7 +41,6 @@ public:
 		ReadProcessMemory(pHandle, reinterpret_cast<const void*>(address), &value, sizeof(T), NULL);
 		return value;
 	}
-
 	template <typename T>
 	constexpr void Write(const uintptr_t& address, const T& value) const noexcept
 	{
@@ -57,8 +57,16 @@ public:
 	bool ReadString(uintptr_t address, LPVOID buffer, SIZE_T size) const
 	{
 		SIZE_T size_read;
+
 		return !!::ReadProcessMemory(pHandle, LPCVOID(address), buffer, size, &size_read) && size_read > 0;
 	}
+	std::string ReadString(ULONG64 address, int length)
+	{
+		static char Buffer[256]{};
+		ReadProcessMemory(pHandle, (void*)(address), Buffer, length, nullptr);
+		
+		return std::string(Buffer);
+	};
 };
 
 extern Memory m;

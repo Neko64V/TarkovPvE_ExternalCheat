@@ -10,6 +10,7 @@ struct Matrix34
 
 struct UnityList
 {
+	char trash[0x10]{};
 	uintptr_t ctx   = 0x10;
 	int count		= 0x18;
 };

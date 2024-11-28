@@ -24,10 +24,6 @@ void KeyBinder(int& target_key, int& BindID)
         }
     }
 
-    // Check
-    if (g.g_AimKey0 == g.g_AimKey1)
-        g.g_AimKey1 = 0;
-
     BindID = NULL;
 }
 

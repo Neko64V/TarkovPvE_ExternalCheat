@@ -4,8 +4,6 @@ void CFramework::MiscAll()
 {
     uintptr_t LocalAddr = local.ptr;
 
-    m.Write<bool>(LocalAddr + 0x818, false);
-
     // BasePointer
     uintptr_t WeaponAnimation = m.Read<uintptr_t>(LocalAddr + offset::WeaponAnimation);
     uintptr_t Physics = m.Read<uintptr_t>(LocalAddr + offset::Physics);
@@ -26,9 +24,6 @@ void CFramework::MiscAll()
     // NoFall Damage
     if (g.g_NoFallDmg && m.Read<float>(Physics + 0xBC) != 0.f)
         m.Write<float>(Physics + 0xBC, 0.f);
-
-    // **SilentAim** Ç…égÇ¶ÇªÇ§
-    //Vector3 shotDirection = m.Read<Vector3>(WeaponAnimation + 0x224);
 }
 
 void CFramework::UpdateList()
@@ -42,34 +37,33 @@ void CFramework::UpdateList()
     while (g.process_active)
     {
         Sleep(1000);
-        printf("Run!\n");
 
         if (g.g_ESP && tarkov->Update())
         {
             // PlayerList
             const auto registered_player = m.Read<uintptr_t>(tarkov->GetLocalGameWorld() + offset::RegisteredPlayers);
-            const auto entity_array = m.Read<UnityList>(registered_player + 0x10);
+            const auto entity_array = m.Read<UnityList>(registered_player);
 
             if (entity_array.count <= 0)
                 continue;
             else if (entity_array.ctx == 0)
                 continue;
-            
-            
-            auto local_addr = m.Read<uintptr_t>(entity_array.ctx + 0x20);
+
+            auto local_addr = m.Read<uintptr_t>(tarkov->GetLocalGameWorld() + offset::MainPlayer);
             
             if (local.GetEntity(local_addr) && local.Update())
             {
                 // ESPópEntityListÇç\íz
-                for (auto ent = 1; ent < entity_array.count; ent++)
+                for (auto ent = 0; ent < entity_array.count; ent++)
                 {
                     CPlayer player{};
-                    uintptr_t player_addr = m.Read<uintptr_t>(entity_array.ctx + 0x20 + (ent * 0x8));
+                    auto player_addr = m.Read<uintptr_t>(entity_array.ctx + 0x20 + (ent * 0x8));
 
-                    if (!player.GetEntity(player_addr))
+                    if (local_addr == player_addr)
                         continue;
 
-                    list_player.push_back(player);
+                    if (player.GetEntity(player_addr))
+                        list_player.push_back(player);
                 }
             }
             else {
@@ -96,33 +90,38 @@ void CFramework::UpdateList()
                 }
             }
 
-            // Item
-            /*
-            uintptr_t LootList = m.Read<uintptr_t>(tarkov->m_LocalGameWorld + offset::LootList);
-            UnityList ItemArray = m.Read<UnityList>(LootList + 0x10);
-
-            for (int k = 0; k < ItemArray.count; k++)
+            // ItemList
+            if (g.g_ESP_Item)
             {
-                CItem item{};
-                uintptr_t i_entity = m.Read<uintptr_t>(ItemArray.ptr + 0x20 + (k * 0x8));
+                const auto LootList = m.Read<uintptr_t>(tarkov->GetLocalGameWorld() + offset::LootList);
+                const auto ItemArray = m.Read<UnityList>(LootList);
 
-                if (!item.GetItem(i_entity) || !item.Update())
-                    continue;
+                for (int k = 0; k < ItemArray.count; k++)
+                {
+                    CItem item{};
+                    auto i_entity = m.Read<uintptr_t>(ItemArray.ctx + 0x20 + (k * 0x8));
 
-                _itemlist.push_back(item);
-            }*/
+                    if (!item.GetItem(i_entity) || !item.Update())
+                        continue;
 
+                    list_item.push_back(item);
+                }
+            }
+           
             // GrenadeList
-            const auto grenade_class = m.Read<uintptr_t>(tarkov->GetLocalGameWorld() + 0x1A0);
-            const auto grenade_array_ptr = m.Read<uintptr_t>(grenade_class + 0x18);
-            const auto grenade_array = m.Read<UnityList>(grenade_array_ptr + 0x10);
-
-            for (auto g = 0; g < grenade_array.count; g++)
+            if (g.g_ESP_Grenade)
             {
-                uintptr_t grenade_addr = m.Read<uintptr_t>(grenade_array.ctx+ 0x20 + (g * 0x8));
+                const auto grenade_class = m.Read<uintptr_t>(tarkov->GetLocalGameWorld() + offset::GrenadeList);
+                const auto grenade_array_ptr = m.Read<uintptr_t>(grenade_class + 0x18);
+                const auto grenade_array = m.Read<UnityList>(grenade_array_ptr);
 
-                if (grenade_addr != NULL)
-                    list_grenade.push_back(grenade_addr);
+                for (auto g = 0; g < grenade_array.count; g++)
+                {
+                    uintptr_t grenade_addr = m.Read<uintptr_t>(grenade_array.ctx + 0x20 + (g * 0x8));
+
+                    if (grenade_addr != NULL)
+                        list_grenade.push_back(grenade_addr);
+                }
             }
         }
         else
@@ -132,12 +131,12 @@ void CFramework::UpdateList()
 
         EntityList = list_player;
         ExfilList = list_exfil;
-        //ItemList = _itemlist;
+        ItemList = list_item;
         GrenadeList = list_grenade;
 
         list_player.clear();
         list_exfil.clear();
-        //_itemlist.clear();
+        list_item.clear();
         list_grenade.clear();
     }
 }

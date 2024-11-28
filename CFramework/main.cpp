@@ -2,7 +2,7 @@
 #include "Framework/Overlay/Overlay.h"
 
 Overlay*	C_Overlay = new Overlay;
-CFramework* C_Tarkov = new CFramework;
+CFramework* C_Tarkov  = new CFramework;
 
 // DEBUG時にはコンソールウィンドウを表示する
 #if _DEBUG
@@ -14,7 +14,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// Fix DPI Scale
 	SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_SYSTEM_AWARE);
 
-	// Apexのウィンドウをベースにして初期化を行う
+	// ウィンドウをベースにして初期化を行う
 	if (!m.AttachProcess("EscapeFromTarkov", InitMode::WINDOW_TITLE)) // 詳細は Memory/Memory.h を参照
 		return 1;
 
@@ -44,6 +44,7 @@ void Overlay::OverlayLoop()
 			DispatchMessage(&msg);
 		}
 
+		// Overlay and Misc
 		C_Tarkov->MiscAll();
 		OverlayManager();
 
@@ -51,13 +52,14 @@ void Overlay::OverlayLoop()
 		ImGui_ImplWin32_NewFrame();
 		ImGui::NewFrame();
 
-		if (g.ShowMenu)
-			C_Tarkov->RenderMenu();
-
+		// Cheat
 		C_Tarkov->RenderInfo();
 
 		if (g.g_ESP)
 			C_Tarkov->RenderESP();
+
+		if (g.ShowMenu)
+			C_Tarkov->RenderMenu();
 
 		ImGui::Render();
 		const float clear_color_with_alpha[4] = { 0.f, 0.f, 0.f, 0.f };

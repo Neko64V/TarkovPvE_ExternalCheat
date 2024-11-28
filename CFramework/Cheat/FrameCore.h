@@ -21,7 +21,7 @@ private:
     CPlayer local;
     std::vector<CPlayer> EntityList;
     std::vector<CExfil> ExfilList;
-    //std::vector<CItem> ItemList;
+    std::vector<CItem> ItemList;
     std::vector<uintptr_t> GrenadeList;
 
     // Colors

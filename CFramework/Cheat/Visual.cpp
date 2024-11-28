@@ -40,7 +40,7 @@ void CFramework::RenderESP()
     // コピー用変数
     std::vector<CPlayer>    list_player = EntityList;
     std::vector<CExfil>     list_exfil  = ExfilList;
-    std::vector<CItem>      list_item{};
+    std::vector<CItem>      list_item   = ItemList;
     std::vector<uintptr_t>  list_grenade= GrenadeList;
     
     // るーぷするよ
@@ -172,6 +172,61 @@ void CFramework::RenderESP()
         }
     }
 
+    // Item
+    if (g.g_ESP_Item)
+    {
+        for (auto& item : list_item)
+        {
+            CItem* pItem = &item;
+
+            // Filter
+            if (pItem->m_iName.empty())
+                continue;
+
+            float ItemDistance = GetDistance(pLocal->m_pVecLocation, pItem->m_pVecLocation);
+
+            // Distance Check
+            if (ItemDistance > g.g_ESP_MaxItemDistance)
+                continue;
+
+            Vector2 pItemScreen{};
+            if (!WorldToScreen(ViewMatrix, Vector2(g.GameRect.right, g.GameRect.bottom), pItem->m_pVecLocation, pItemScreen))
+                continue;
+
+            ImGui::GetBackgroundDrawList()->AddCircleFilled(ImVec2(pItemScreen.x, pItemScreen.y - 2.f), 2.f, ImColor(1.f, 1.f, 1.f, 1.f), 0.f);
+            String(ImVec2(pItemScreen.x - (ImGui::CalcTextSize(pItem->m_iName.c_str()).x / 2.f), pItemScreen.y), ImColor(1.f, 1.f, 1.f, 1.f), pItem->m_iName.c_str());
+        }
+    }
+
+    // Grenade
+    if (g.g_ESP_Grenade)
+    {
+        for (auto& grenade : GrenadeList)
+        {
+            uintptr_t TransformInternal = m.ReadChain(grenade, { 0x10, 0x30, 0x30, 0x8, 0x28, 0x10 });
+            Vector3 m_pVecLocation = GetTransformPosition(TransformInternal);
+
+            if (Vec3_Empty(m_pVecLocation))
+                continue;
+
+            float gDistance = GetDistance(pLocal->m_pVecLocation, m_pVecLocation);
+
+            if (gDistance > 100.f)
+                continue;
+            else if (gDistance < 10.f)
+                String(ImVec2(g.GameRect.right / 2.f - (ImGui::CalcTextSize("[ WARNING ] Grenade!!").x / 2.f), g.GameRect.bottom / 2.f), ImColor(1.f, 0.f, 0.f, 1.f), "[ WARNING ] Grenade!!");
+
+
+            Vector2 pGrenadeRoot{};
+            if (!WorldToScreen(ViewMatrix, Vector2(g.GameRect.right, g.GameRect.bottom), m_pVecLocation, pGrenadeRoot))
+                continue;
+
+            std::string gre_tx = "Grenade [" + std::to_string(int(gDistance)) + "m]";
+            ImGui::GetBackgroundDrawList()->AddCircleFilled(ImVec2(pGrenadeRoot.x, pGrenadeRoot.y), 2.f, ImColor(1.f, 0.f, 0.f, 1.f), 0.f);
+            String(ImVec2(pGrenadeRoot.x - (ImGui::CalcTextSize(gre_tx.c_str()).x / 2.f), pGrenadeRoot.y - 13.f), ImColor(1.f, 0.f, 0.f, 1.f), gre_tx.c_str());
+        }
+    }
+
     // Exfil
     if (g.g_ESP_Exfil)
     {
@@ -190,48 +245,5 @@ void CFramework::RenderESP()
             ImGui::GetBackgroundDrawList()->AddCircleFilled(ImVec2(pExfilScreen.x, pExfilScreen.y - 2.f), 2.f, ExfilColor, 0.f);
             String(ImVec2(pExfilScreen.x - (ImGui::CalcTextSize(exfilText.c_str()).x / 2.f), pExfilScreen.y), ExfilColor, exfilText.c_str());
         }
-    }
-    /*
-    // Item
-    for (auto& item : _IList)
-    {
-        CItem* pItem = &item;
-        
-        float ItemDistance = GetDistance(pLocal->m_pVecLocation, pItem->m_pVecLocation);
-
-        // Distance Check
-
-
-        Vector2 pItemScreen{};
-        if (!WorldToScreen(ViewMatrix, Vector2(g.GameRect.right, g.GameRect.bottom), pItem->m_pVecLocation, pItemScreen))
-            continue;
-
-        ImGui::GetBackgroundDrawList()->AddCircleFilled(ImVec2(pItemScreen.x, pItemScreen.y - 2.f), 2.f, ImColor(1.f, 1.f, 1.f, 1.f), 0.f);
-        String(ImVec2(pItemScreen.x - (ImGui::CalcTextSize("Item").x / 2.f), pItemScreen.y), ImColor(1.f, 1.f, 1.f, 1.f), "Item");
-    }*/
-
-    // Grenade
-    for (auto& grenade : GrenadeList)
-    {
-        uintptr_t TransformInternal = m.ReadChain(grenade, { 0x10, 0x30, 0x30, 0x8, 0x28, 0x10 });
-        Vector3 m_pVecLocation = GetTransformPosition(TransformInternal);
-
-        if (Vec3_Empty(m_pVecLocation))
-            continue; 
-
-        float gDistance = GetDistance(pLocal->m_pVecLocation, m_pVecLocation);
-
-        if (gDistance > 100.f)
-            continue;
-        else if (gDistance < 10.f)
-            String(ImVec2(g.GameRect.right / 2.f - (ImGui::CalcTextSize("[ WARNING ] Grenade!!").x / 2.f), g.GameRect.bottom / 2.f), ImColor(1.f, 0.f, 0.f, 1.f), "[ WARNING ] Grenade!!");
-
-        Vector2 pGrenadeRoot{};
-        if (!WorldToScreen(ViewMatrix, Vector2(g.GameRect.right, g.GameRect.bottom), m_pVecLocation, pGrenadeRoot))
-            continue;
-
-        std::string gre_tx = "Grenade [" + std::to_string(int(gDistance)) + "m]";
-        ImGui::GetBackgroundDrawList()->AddCircleFilled(ImVec2(pGrenadeRoot.x, pGrenadeRoot.y), 2.f, ImColor(1.f, 0.f, 0.f, 1.f), 0.f);
-        String(ImVec2(pGrenadeRoot.x - (ImGui::CalcTextSize(gre_tx.c_str()).x / 2.f), pGrenadeRoot.y - 13.f), ImColor(1.f, 0.f, 0.f, 1.f), gre_tx.c_str());
     }
 }

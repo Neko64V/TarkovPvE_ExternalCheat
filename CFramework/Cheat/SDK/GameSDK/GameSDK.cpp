@@ -133,15 +133,15 @@ bool EFT::InitAddress()
 	// GameWorld
 	uintptr_t activeNodes = m.Read<uintptr_t>(m_GOM.ActiveNodes);
 	uintptr_t lastActiveNode = m.Read<uintptr_t>(m_GOM.LastActiveNode);
-	m_GameWorld = GetObjectFromList(activeNodes, lastActiveNode, "GameWorld");
+	m_gameWorld = GetObjectFromList(activeNodes, lastActiveNode, "GameWorld");
 
-	return m_GameWorld == 0 ? false : true;
+	return m_gameWorld == 0 ? false : true;
 }
 
 bool EFT::Update()
 {
 	// LocalGameWorld
-	m_localGameWorld = m.ReadChain(m_GameWorld, { 0x30, 0x18, 0x28 });
+	m_localGameWorld = m.ReadChain(m_gameWorld, { 0x30, 0x18, 0x28 });
 
 	if (m_localGameWorld == 0) {
 		if (!InitAddress())

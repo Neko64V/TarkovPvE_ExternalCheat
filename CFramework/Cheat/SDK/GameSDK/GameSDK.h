@@ -7,14 +7,15 @@ namespace offset
 	constexpr auto Tarkov_Camera = 0x179F500;
 	constexpr auto GameObjectManager = 0x17FFD28;
 	
-	// EFT.GameWorld
+	// ClientLocalGameWorld - SPT
 	constexpr auto ExfilController	 = 0x18;
 	constexpr auto LootList			 = 0xC8;
 	constexpr auto RegisteredPlayers = 0xF0;
+	constexpr auto MainPlayer		 = 0x148;
 	constexpr auto GrenadeList		 = 0x1A0;
 
-	// EFT.Player
-	constexpr auto PlayerBody = 0xA8;
+	// EFT.Player - SPT
+	constexpr auto PlayerBody		= 0xA8;
 	constexpr auto WeaponAnimation  = 0x1C0;
 	constexpr auto Profile			= 0x5C0;
 	constexpr auto Physics			= 0x5D0;
@@ -25,10 +26,10 @@ class EFT
 {
 private:
 	GameObjectManager m_GOM{};
-	uintptr_t m_GameWorld;
+	uintptr_t m_gameWorld;
 	uintptr_t m_fpsCamera;
 public:
-	Matrix	  m_ViewMatrix{};
+	Matrix	  m_ViewMatrix;
 	uintptr_t m_localGameWorld;
 
 	bool InitAddress();

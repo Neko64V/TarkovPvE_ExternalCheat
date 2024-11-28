@@ -8,8 +8,9 @@ private:
 public:
     uintptr_t ptr;
 
+	int m_iPrice;
+	std::string m_iName;
 	Vector3 m_pVecLocation;
-	std::string m_ItemName;
 
 	bool GetItem(uintptr_t& address);
 	bool Update();
