@@ -106,6 +106,8 @@ uintptr_t GetObjectFromList(uintptr_t listPtr, uintptr_t lastObjectPtr, const ch
 			if (strcmp(ObjectName, objectName) == 0)
 				return activeObject.object;
 
+			Sleep(1);
+
 			activeObject = m.Read<BaseObject>(activeObject.nextObjectLink);
 		}
 	}
@@ -119,7 +121,7 @@ uintptr_t GetObjectFromList(uintptr_t listPtr, uintptr_t lastObjectPtr, const ch
 	}
 
 	ZeroMemory(ObjectName, sizeof(ObjectName));
-	Sleep(1);
+	
 
 	return 0;
 }

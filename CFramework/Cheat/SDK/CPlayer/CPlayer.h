@@ -19,13 +19,12 @@ public:
 	Vector3 m_pNeckLocation;
 	std::vector<Vector3> m_pBoneList;
 
-	void UpdateHealth();
-	void UpdateBone();
-
     // Functions
     bool GetEntity(uintptr_t& address);
 	bool Update();
-	uintptr_t GetWeaponAnimation();
+	void UpdateBone();
+	void UpdateHealth();
 	bool IsAiming();
+	uintptr_t GetWeaponAnimation();
 	Vector3 GetBonePosition(int BoneId);
 };

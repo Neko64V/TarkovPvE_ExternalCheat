@@ -55,7 +55,7 @@ void CFramework::UpdateList()
                     CPlayer player{};
                     auto player_addr = m.Read<uintptr_t>(entity_array.ctx + 0x20 + (ent * 0x8));
 
-                    if (local_addr == player_addr)
+                    if (player_addr == NULL || local_addr == player_addr)
                         continue;
 
                     if (player.GetEntity(player_addr))
@@ -100,6 +100,7 @@ void CFramework::UpdateStaticList()
     {
         std::vector<CItem>  list_item{};
         std::vector<CExfil> list_exfil{};
+        static int OldSize = 0;
 
         if (tarkov->Update())
         {
@@ -109,16 +110,21 @@ void CFramework::UpdateStaticList()
                 const auto LootList = m.Read<uintptr_t>(tarkov->GetLocalGameWorld() + offset::LootList);
                 const auto ItemArray = m.Read<UnityList>(LootList);
 
-                for (int k = 0; k < ItemArray.count; k++)
+                if (ItemArray.count != OldSize)
                 {
-                    CItem item{};
-                    auto i_entity = m.Read<uintptr_t>(ItemArray.ctx + 0x20 + (k * 0x8));
+                    for (int k = 0; k < ItemArray.count; k++)
+                    {
+                        CItem item{};
+                        auto i_entity = m.Read<uintptr_t>(ItemArray.ctx + 0x20 + (k * 0x8));
 
-                    if (!item.GetItem(i_entity) || !item.Update())
-                        continue;
+                        if (!item.GetItem(i_entity) || !item.Update())
+                            continue;
 
-                    list_item.push_back(item);
+                        list_item.push_back(item);
+                    }
                 }
+
+                OldSize = ItemArray.count;
             }
             
             // Exfil
@@ -244,7 +250,19 @@ void CFramework::GetESPInfo(const int& SpawnType, std::string& vOutStr, ImColor&
         vOutStr = "Kaban";
         vOutColor = Col_ESP_Boss;
         break;
-    case KABAN_FOLLOW:
+    case KABAN_FOLLOW_0:
+        vOutStr = "follower";
+        vOutColor = Col_ESP_SpecialScav;
+        break;
+    case KABAN_FOLLOW_1:
+        vOutStr = "follower";
+        vOutColor = Col_ESP_SpecialScav;
+        break;
+    case KABAN_FOLLOW_2:
+        vOutStr = "follower";
+        vOutColor = Col_ESP_SpecialScav;
+        break;
+    case KABAN_FOLLOW_3:
         vOutStr = "follower";
         vOutColor = Col_ESP_SpecialScav;
         break;
