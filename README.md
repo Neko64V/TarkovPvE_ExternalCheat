@@ -34,3 +34,4 @@ CheatEngine ->Mono -> .Net Info -> Assembly-CSharp -> EFT.GameWorld / EFT.Player
 
 ## スクリーンショット
 ![image](https://github.com/user-attachments/assets/0be7e79e-6d53-4963-9b5f-2a2ddf21d969)
+![image](https://github.com/user-attachments/assets/849a1807-e477-4478-92be-08cb723c9b0c)
