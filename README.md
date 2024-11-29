@@ -3,14 +3,16 @@ SPT-AKI 3.9.X 向けの外部チートです。チート開発に対する興味
 モダンなGUIメニューやビジュアルを兼ね備えています。研究、分析、学習や調査用にもどうぞ。
 
 ## 機能
-* ESP
+* Player ESP
 * Exfil ESP
-* Item ESP（Commented & WIP）
+* Item ESP（WIP）
 * Grenade ESP
+* MISCs
 * MenuKey : INSERT
 
 ## 備考
-* CPlayer->Update(); <- 多分この関数がめっちゃCPU喰ってる説ある。めんどいなぁ…。
+* パフォーマンスの制約上、Exfil, Itemの更新は15秒に1回行われます。
+* Vector3 GetTransformPosition(uintptr_t& transform); を大量に使用する関数、つまりCPlayer->Update(); 等がCPUをかなり食います。
 
 ## 実行
 必要なライブラリは全て揃っているので、VisualStudioでビルドすれば普通に動くはずです。  
