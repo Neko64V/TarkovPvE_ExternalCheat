@@ -175,12 +175,13 @@ enum WildSpanwType : int
 
 	// Global
 	BTR_VEHICLE = 46,
+	SCAV_PARTISAN,
 
 	// Player
 	PMC_BEAR_PvE = 49,
 	PMC_USEC_PvE = 50,
 
 	// Global (?
-	ASSAULT_SCAV_RU = 51,		// RU - Scav
-	ASSAULT_SCAV_UN = 52	// US - Scav
+	PMC_BEAR_NEW = 51,
+	PMC_USEC_NEW = 52
 };

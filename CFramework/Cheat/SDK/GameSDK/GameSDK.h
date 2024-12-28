@@ -7,19 +7,22 @@ namespace offset
 	constexpr auto Tarkov_Camera = 0x179F500;
 	constexpr auto GameObjectManager = 0x17FFD28;
 	
-	// ClientLocalGameWorld - SPT
-	constexpr auto ExfilController	 = 0x18;
-	constexpr auto LootList			 = 0xC8;
-	constexpr auto RegisteredPlayers = 0xF0;
-	constexpr auto MainPlayer		 = 0x148;
-	constexpr auto GrenadeList		 = 0x1A0;
+	// EFT.GameWorld
+	constexpr auto ExfilController	 = 0x20;
+	constexpr auto LootList			 = 0x100;
+	constexpr auto RegisteredPlayers = 0x128;
+	constexpr auto MainPlayer		 = 0x190;
+	constexpr auto GrenadeList		 = 0x1E8;
 
-	// EFT.Player - SPT
-	constexpr auto PlayerBody		= 0xA8;
-	constexpr auto WeaponAnimation  = 0x1C0;
-	constexpr auto Profile			= 0x5C0;
-	constexpr auto Physics			= 0x5D0;
-	constexpr auto HealthController = 0x600;
+	// EFT.Player
+	constexpr auto PlayerBody		= 0xB8;
+	constexpr auto WeaponAnimation  = 0x1D8;
+	constexpr auto Profile			= 0x648;
+	constexpr auto Physics			= 0x668;
+	constexpr auto HealthController = 0x688;
+
+	// WeaponAnimation
+	//constexpr auto IsAiming			= 0x0000;
 };
 
 class EFT

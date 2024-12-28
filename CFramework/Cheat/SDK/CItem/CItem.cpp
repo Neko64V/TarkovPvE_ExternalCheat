@@ -65,7 +65,7 @@ bool CItem::Update()
 	uintptr_t TransformInternal = m.ReadChain(ptr, { 0x10, 0x30, 0x30, 0x8, 0x28, 0x10 });
 	m_pVecLocation = GetTransformPosition(TransformInternal);
 
-	if (Vec3_Empty(m_pVecLocation))// || m_pVecLocation.y  < -30.f)
+	if (Vec3_Empty(m_pVecLocation))
 		return false;
 	
 	// ClassName

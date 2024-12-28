@@ -12,7 +12,7 @@ SPT-AKI 3.9.X 向けの外部チートです。チート開発に対する興味
 
 ## 備考
 * パフォーマンスの制約上、Exfil, Itemの更新は15秒に1回行われます。
-* Vector3 GetTransformPosition(uintptr_t& transform); を大量に使用する関数、つまりCPlayer->Update(); 等がCPUをかなり食います。
+* ESP等のチートのコアとなる部分のパフォーマンスの最適化は行いました。その他は手を付けてないです。
 
 ## 実行
 必要なライブラリは全て揃っているので、VisualStudioでビルドすれば普通に動くはずです。  

@@ -282,6 +282,10 @@ void CFramework::GetESPInfo(const int& SpawnType, std::string& vOutStr, ImColor&
         vOutStr = "BTR-82";
         vOutColor = ImColor(1.f, 1.f, 1.f, 1.f);
         break;
+    case SCAV_PARTISAN:
+        vOutStr = "Partisan";
+        vOutColor = Col_ESP_Scav;
+        break;
     case RAIDER_SCAV:
         vOutStr = "Raider";
         vOutColor = Col_ESP_SpecialScav;
@@ -307,6 +311,14 @@ void CFramework::GetESPInfo(const int& SpawnType, std::string& vOutStr, ImColor&
         vOutColor = Col_ESP_PMC;
         break;
     case PMC_USEC_PvE:
+        vOutStr = "USEC";
+        vOutColor = Col_ESP_PMC;
+        break;
+    case PMC_BEAR_NEW:
+        vOutStr = "BEAR";
+        vOutColor = Col_ESP_PMC;
+        break;
+    case PMC_USEC_NEW:
         vOutStr = "USEC";
         vOutColor = Col_ESP_PMC;
         break;
