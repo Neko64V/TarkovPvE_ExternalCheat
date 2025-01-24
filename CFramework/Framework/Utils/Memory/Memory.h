@@ -30,7 +30,7 @@ private:
 public:
 	uintptr_t m_gBaseAddress;
 
-	bool AttachProcess(const std::string targetName, int mode);
+	bool AttachProcess(const char* targetName, int mode);
 	void DetachProcess();
 
 	// R/WPM Templates
@@ -67,7 +67,6 @@ public:
 		
 		return std::string(Buffer);
 	};
-
 	wchar_t* ReadWString(uintptr_t address, int length)
 	{
 		wchar_t Buffer[256]{};

@@ -23,10 +23,15 @@ private:
 	RECT GameRect{};
 	POINT GamePoint{};
 
+	// Window LONG
+	LONG MenuStyle = WS_EX_LAYERED | WS_EX_TOOLWINDOW | WS_EX_TOPMOST;
+	LONG ESPStyle = WS_EX_TRANSPARENT | WS_EX_LAYERED | WS_EX_TOOLWINDOW | WS_EX_TOPMOST;
+
 	bool CreateOverlay();
 	HWND GetTargetWindow(const std::string processName);	// 実行ファイル名からウィンドウハンドルを取得する
 public:
 	bool InitOverlay(const std::string targetName, int mode);
+	void OverlayUserFunction();
 	void OverlayLoop();
 	void DestroyOverlay();
 	void OverlayManager();

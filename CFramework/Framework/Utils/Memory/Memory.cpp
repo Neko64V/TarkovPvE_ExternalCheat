@@ -1,44 +1,32 @@
 ﻿#include "Memory.h"
 
-bool Memory::AttachProcess(const std::string targetName, int mode)
+bool Memory::AttachProcess(const char* targetName, int InitMode)
 {
-    switch (mode)
+    if (InitMode == WINDOW_TITLE || InitMode == WINDOW_CLASS)
     {
-    case InitMode::WINDOW_TITLE: {
-        HWND TargetHwnd = FindWindowA(NULL, targetName.c_str());
+        HWND TargetHwnd = InitMode == WINDOW_TITLE ? FindWindowA(NULL, targetName) : FindWindowA(targetName, NULL);
 
         if (!TargetHwnd) {
-            MessageBoxA(nullptr, "Please open { GAME NAME #1 }", "Init Error", MB_TOPMOST | MB_ICONERROR | MB_OK);
+            MessageBoxA(nullptr, "Please open ##GAME_NAME", "Init Fail", MB_TOPMOST | MB_ICONERROR | MB_OK);
             return false;
         }
 
         GetWindowThreadProcessId(TargetHwnd, &PID);
-        break;
     }
-    case InitMode::WINDOW_CLASS: {
-        HWND TargetHwnd = FindWindowA(targetName.c_str(), NULL);
-
-        if (!TargetHwnd) {
-            MessageBoxA(nullptr, "Please open { GAME NAME #1 }", "Init Error", MB_TOPMOST | MB_ICONERROR | MB_OK);
-            return false;
-        }
-
-        GetWindowThreadProcessId(TargetHwnd, &PID);
-        break;
-    }
-    case InitMode::PROCESS: {
+    else if (InitMode == PROCESS)
+    {
         PROCESSENTRY32 process = GetProcess(targetName);
 
         if (process.th32ProcessID == 0) {
-            MessageBoxA(nullptr, "Please open { GAME NAME #2 }", "Init Error", MB_TOPMOST | MB_ICONERROR | MB_OK);
+            MessageBoxA(nullptr, "Please open ##GAME_NAME", "Init Fail", MB_TOPMOST | MB_ICONERROR | MB_OK);
             return false;
         }
 
         PID = process.th32ProcessID;
-        break;
     }
-    default:
-        MessageBoxA(nullptr, "Invalid memory init option", "Init Error", MB_TOPMOST | MB_ICONERROR | MB_OK);
+    else
+    {
+        MessageBoxA(nullptr, "Invalid memory option", "Init Fail", MB_TOPMOST | MB_ICONERROR | MB_OK);
         return false;
     }
 

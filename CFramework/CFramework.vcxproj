@@ -155,7 +155,7 @@
     <ClCompile Include="Framework\ImGui\imgui_impl_win32.cpp" />
     <ClCompile Include="Framework\ImGui\imgui_tables.cpp" />
     <ClCompile Include="Framework\ImGui\imgui_widgets.cpp" />
-    <ClCompile Include="Framework\Overlay\Manager.cpp" />
+    <ClCompile Include="Framework\Overlay\OverlayUserFunctions.cpp" />
     <ClCompile Include="Framework\Overlay\Overlay.cpp" />
     <ClCompile Include="Framework\Utils\Config\Config.cpp" />
     <ClCompile Include="Framework\Utils\Memory\Memory.cpp" />

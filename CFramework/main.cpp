@@ -4,6 +4,19 @@
 Overlay*	C_Overlay = new Overlay;
 CFramework* C_Tarkov  = new CFramework;
 
+void Overlay::OverlayUserFunction()
+{
+	C_Tarkov->MiscAll();
+
+	C_Tarkov->RenderInfo();
+
+	if (g.g_ESP)
+		C_Tarkov->RenderESP();
+
+	if (g.ShowMenu)
+		C_Tarkov->RenderMenu();
+}
+
 // DEBUG時にはコンソールウィンドウを表示する
 #if _DEBUG
 int main()
@@ -33,41 +46,4 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	delete C_Tarkov, C_Overlay;
 
 	return 0;
-}
-
-void Overlay::OverlayLoop()
-{
-	while (g.process_active)
-	{
-		MSG msg;
-		while (PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE)) {
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-		}
-
-		// Overlay and Misc
-		C_Tarkov->MiscAll();
-		OverlayManager();
-
-		ImGui_ImplDX11_NewFrame();
-		ImGui_ImplWin32_NewFrame();
-		ImGui::NewFrame();
-
-		// Cheat
-		C_Tarkov->RenderInfo();
-
-		if (g.g_ESP)
-			C_Tarkov->RenderESP();
-
-		if (g.ShowMenu)
-			C_Tarkov->RenderMenu();
-
-		ImGui::Render();
-		const float clear_color_with_alpha[4] = { 0.f, 0.f, 0.f, 0.f };
-		g_pd3dDeviceContext->OMSetRenderTargets(1, &g_mainRenderTargetView, NULL);
-		g_pd3dDeviceContext->ClearRenderTargetView(g_mainRenderTargetView, clear_color_with_alpha);
-		ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
-
-		g_pSwapChain->Present(1, 0);
-	}
 }
