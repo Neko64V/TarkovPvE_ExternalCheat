@@ -11,7 +11,7 @@ struct Matrix34
 struct UnityList
 {
 	char trash[0x10]{};
-	uintptr_t ctx   = 0x10;
+	uintptr_t list_address   = 0x10;
 	int count		= 0x18;
 };
 
@@ -177,7 +177,7 @@ enum WildSpanwType : int
 	BTR_VEHICLE = 46,
 	SCAV_PARTISAN,
 
-	// Player
+	// OLD
 	PMC_BEAR_PvE = 49,
 	PMC_USEC_PvE = 50,
 

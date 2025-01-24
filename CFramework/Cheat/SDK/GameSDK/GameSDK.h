@@ -18,7 +18,7 @@ namespace offset
 	constexpr auto PlayerBody		= 0xB8;
 	constexpr auto WeaponAnimation  = 0x1D8;
 	constexpr auto Profile			= 0x648;
-	constexpr auto Physics			= 0x668;
+	constexpr auto Physics			= 0x658;
 	constexpr auto HealthController = 0x688;
 
 	// WeaponAnimation

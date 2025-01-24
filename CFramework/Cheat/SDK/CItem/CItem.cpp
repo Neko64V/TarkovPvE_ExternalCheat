@@ -53,7 +53,7 @@ std::vector<C_EFT_ItemData>C_LootList =
 	}
 };
 
-bool CItem::GetItem(uintptr_t& address)
+bool CItem::GetAddress(uintptr_t& address)
 {
 	ptr = address;
 	return ptr == NULL ? false : true;

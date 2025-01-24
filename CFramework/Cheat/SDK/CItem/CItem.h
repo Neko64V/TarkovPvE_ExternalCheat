@@ -12,6 +12,6 @@ public:
 	std::string m_iName;
 	Vector3 m_pVecLocation;
 
-	bool GetItem(uintptr_t& address);
+	bool GetAddress(uintptr_t& address);
 	bool Update();
 };

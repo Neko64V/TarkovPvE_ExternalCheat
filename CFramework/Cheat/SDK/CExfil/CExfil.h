@@ -13,6 +13,8 @@ public:
 	Vector3 m_pVecLocation;
 	std::string m_pExfilName;
 
-	bool GetExfil(uintptr_t& address);
+	bool GetAddress(uintptr_t& address);
+	int GetStatus();
+	std::string GetName();
 	bool Update();
 };
