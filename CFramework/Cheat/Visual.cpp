@@ -52,7 +52,7 @@ void CFramework::RenderESP()
             continue;
         
         // 距離を算出
-        float Distance = GetDistance(pLocal->m_pVecLocation, pEntity->m_pVecLocation);
+        float Distance = GetDistance(pLocal->m_vecLocation, pEntity->m_vecLocation);
 
         // 範囲外のプレイヤーは除外
         if (g.g_ESP_MaxDistance < Distance)
@@ -60,13 +60,13 @@ void CFramework::RenderESP()
 
         // WorldToScreen
         Vector2 pScreen{}, pHead{}, pNeck{};;
-        if (!WorldToScreen(ViewMatrix, Vector2(g.GameRect.right, g.GameRect.bottom), pEntity->m_pVecLocation, pScreen))
+        if (!WorldToScreen(ViewMatrix, Vector2(g.GameRect.right, g.GameRect.bottom), pEntity->m_vecLocation, pScreen))
             continue;
 
         // WorldToScreen
         pEntity->UpdateBone();
-        if (!WorldToScreen(ViewMatrix, Vector2(g.GameRect.right, g.GameRect.bottom), pEntity->m_pHeadLocation, pHead) ||
-            !WorldToScreen(ViewMatrix, Vector2(g.GameRect.right, g.GameRect.bottom), pEntity->m_pNeckLocation, pNeck))
+        if (!WorldToScreen(ViewMatrix, Vector2(g.GameRect.right, g.GameRect.bottom), pEntity->m_vecHeadLocation, pHead) ||
+            !WorldToScreen(ViewMatrix, Vector2(g.GameRect.right, g.GameRect.bottom), pEntity->m_vecNeckLocation, pNeck))
             continue;
 
         // 各種サイズの算出等
@@ -76,13 +76,13 @@ void CFramework::RenderESP()
 
         std::string Name = "InValid";
         ImColor pColor = ImColor(1.f, 1.f, 1.f, 1.f);
-        GetESPInfo(pEntity->m_pSpawnType, Name, pColor);
+        GetESPInfo(pEntity->m_iSpawnType, Name, pColor);
 
         // BTR-82
-        if (pEntity->m_pSpawnType == BTR_VEHICLE) {
+        if (pEntity->m_iSpawnType == BTR_VEHICLE) {
             ImGui::GetBackgroundDrawList()->AddCircleFilled(ImVec2(pScreen.x, pScreen.y - 2.f), 2.f, ImColor(1.f, 1.f, 1.f, 1.f), 0.f);
 
-            std::string BTR_Text = "BTR-82[" + std::to_string((int)Distance) + "m]";
+            std::string BTR_Text = "BTR-82 [" + std::to_string((int)Distance) + "m]";
             String(ImVec2(pScreen.x - (ImGui::CalcTextSize(BTR_Text.c_str()).x / 2.f), pScreen.y), ImColor(1.f, 1.f, 1.f, 1.f), BTR_Text.c_str());
 
             continue;
@@ -130,20 +130,19 @@ void CFramework::RenderESP()
         {
             // BoneList
             Vector3 list[][2] = { 
-                { pEntity->m_pNeckLocation, pEntity->m_pBoneList[CPelvis] }, 
-                { pEntity->m_pNeckLocation, pEntity->m_pBoneList[CLeftForearm] },
-                { pEntity->m_pBoneList[CLeftForearm], pEntity->m_pBoneList[CLeftPalm] },
-                { pEntity->m_pNeckLocation, pEntity->m_pBoneList[CRightForearm] },
-                { pEntity->m_pBoneList[CRightForearm], pEntity->m_pBoneList[CRightPalm] },
-                { pEntity->m_pBoneList[CPelvis], pEntity->m_pBoneList[CLeftThigh] },
-                { pEntity->m_pBoneList[CLeftThigh], pEntity->m_pBoneList[CLeftFoot] },
-                { pEntity->m_pBoneList[CPelvis], pEntity->m_pBoneList[CRightThigh] },
-                { pEntity->m_pBoneList[CRightThigh], pEntity->m_pBoneList[CRightFoot] }
+                { pEntity->m_vecNeckLocation, pEntity->m_pVecBoneList[CPelvis] }, 
+                { pEntity->m_vecNeckLocation, pEntity->m_pVecBoneList[CLeftForearm] },
+                { pEntity->m_pVecBoneList[CLeftForearm], pEntity->m_pVecBoneList[CLeftPalm] },
+                { pEntity->m_vecNeckLocation, pEntity->m_pVecBoneList[CRightForearm] },
+                { pEntity->m_pVecBoneList[CRightForearm], pEntity->m_pVecBoneList[CRightPalm] },
+                { pEntity->m_pVecBoneList[CPelvis], pEntity->m_pVecBoneList[CLeftThigh] },
+                { pEntity->m_pVecBoneList[CLeftThigh], pEntity->m_pVecBoneList[CLeftFoot] },
+                { pEntity->m_pVecBoneList[CPelvis], pEntity->m_pVecBoneList[CRightThigh] },
+                { pEntity->m_pVecBoneList[CRightThigh], pEntity->m_pVecBoneList[CRightFoot] }
             };
 
             // Body
-            for (int j = 0; j < 9; j++)
-            {
+            for (int j = 0; j < 9; j++) {
                 Vector2 bOut1{}, bOut2{};
                 if (!WorldToScreen(ViewMatrix, Vector2(g.GameRect.right, g.GameRect.bottom), list[j][0], bOut1) || !WorldToScreen(ViewMatrix, Vector2(g.GameRect.right, g.GameRect.bottom), list[j][1], bOut2))
                     break;
@@ -164,15 +163,15 @@ void CFramework::RenderESP()
         // Healthbar
         if (g.g_ESP_HealthBar) {
             pEntity->UpdateHealth();
-            HealthBar(pScreen.x - pWidth - 4.f, pScreen.y, 2.f, -pHeight, pEntity->m_pHealth, pEntity->m_pHealthMax);
+            HealthBar(pScreen.x - pWidth - 4.f, pScreen.y, 2.f, -pHeight, pEntity->m_fHealth, pEntity->m_fHealthMax);
         }
         
         // Name
-        if (g.g_ESP_Name && pEntity->m_pSpawnType != SCAV && pEntity->m_pSpawnType != SNIPER_SCAV && pEntity->m_pSpawnType != NORMAL_SCAV)
+        if (g.g_ESP_Name && pEntity->m_iSpawnType != SCAV && pEntity->m_iSpawnType != SNIPER_SCAV && pEntity->m_iSpawnType != NORMAL_SCAV)
         {
             // 不明なSpawnTypeだったら値を表示
             if (!Name.compare("InValid"))
-                Name += "[" + std::to_string(pEntity->m_pSpawnType) + "]";
+                Name += "[" + std::to_string(pEntity->m_iSpawnType) + "]";
 
             String(ImVec2(pScreen.x - (ImGui::CalcTextSize(Name.c_str()).x / 2.f), pScreen.y - pHeight - 14.f), ImColor(1.f, 1.f, 1.f, 1.f), Name.c_str());
         }
@@ -189,7 +188,7 @@ void CFramework::RenderESP()
             if (pItem->m_iName.empty())
                 continue;
 
-            float ItemDistance = GetDistance(pLocal->m_pVecLocation, pItem->m_pVecLocation);
+            float ItemDistance = GetDistance(pLocal->m_vecLocation, pItem->m_pVecLocation);
 
             // Distance Check
             if (ItemDistance > g.g_ESP_MaxItemDistance)
@@ -216,7 +215,7 @@ void CFramework::RenderESP()
             if (Vec3_Empty(m_pVecLocation))
                 continue;
 
-            float gDistance = GetDistance(pLocal->m_pVecLocation, m_pVecLocation);
+            float gDistance = GetDistance(pLocal->m_vecLocation, m_pVecLocation);
 
             if (gDistance > 100.f)
                 continue;
@@ -247,7 +246,7 @@ void CFramework::RenderESP()
 
             ImColor ExfilColor = pExfil->m_pExfilStatus == NOTREADY ? Col_ESP_ExfilClose : Col_ESP_ExfilOpen;
 
-            std::string exfilText = pExfil->m_pExfilName + " [" + std::to_string((int)GetDistance(pLocal->m_pVecLocation, pExfil->m_pVecLocation)) + "m]";
+            std::string exfilText = pExfil->m_pExfilName + " [" + std::to_string((int)GetDistance(pLocal->m_vecLocation, pExfil->m_pVecLocation)) + "m]";
 
             ImGui::GetBackgroundDrawList()->AddCircleFilled(ImVec2(pExfilScreen.x, pExfilScreen.y - 2.f), 2.f, ExfilColor, 0.f);
             String(ImVec2(pExfilScreen.x - (ImGui::CalcTextSize(exfilText.c_str()).x / 2.f), pExfilScreen.y), ExfilColor, exfilText.c_str());

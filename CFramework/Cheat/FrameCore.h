@@ -19,7 +19,7 @@ public:
     ~CFramework();
 private:
     EFT* tarkov = new EFT();
-    CPlayer local;
+    CPlayer local, *pLocal = &local;
     std::vector<CPlayer> EntityList;
     std::vector<CExfil> ExfilList;
     std::vector<CItem> ItemList;
@@ -45,7 +45,7 @@ private:
 
     void DrawLine(ImVec2 a, ImVec2 b, ImColor color, float width)
     {
-        ImGui::GetBackgroundDrawList()->AddLine(a, b, color, width);
+        ImGui::GetBackgroundDrawList()->AddLine(ImVec2((int)a.x, (int)a.y), ImVec2((int)b.x, (int)b.y), color, width);
     }
     void RectFilled(float x0, float y0, float x1, float y1, ImColor color, float rounding, int rounding_corners_flags)
     {

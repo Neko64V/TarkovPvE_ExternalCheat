@@ -40,6 +40,8 @@ void CFramework::RenderMenu()
     switch (Index)
     {
     case 0: // Visual
+        ImGui::BeginChild("##LeftChild-0", ImVec2(ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y / 3.f), true);
+
         ImGui::Text("Visual");
         ImGui::Separator();
         ImGui::Spacing();
@@ -49,8 +51,8 @@ void CFramework::RenderMenu()
         ImGui::Checkbox("Exfil ESP", &g.g_ESP_Exfil);
         ImGui::Checkbox("Grenade ESP", &g.g_ESP_Grenade);
 
-        ImGui::NewLine();
-        ImGui::Spacing();
+        ImGui::EndChild();
+        ImGui::BeginChild("##LeftChild-1", ImVec2(ImGui::GetContentRegionAvail()), true);
 
         ImGui::Text("ESP Options");
         ImGui::Separator();
@@ -63,20 +65,35 @@ void CFramework::RenderMenu()
         ImGui::Checkbox("Distance", &g.g_ESP_Distance);
         ImGui::Checkbox("Name", &g.g_ESP_Name);
         ImGui::Checkbox("HealthBar", &g.g_ESP_HealthBar);
+
+        ImGui::EndChild();
         break;
     case 1: // Misc
+        ImGui::BeginChild("##LeftChild-1-0", ImVec2(ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y / 3.f), true);
+
+        ImGui::Text("Misc");
+        ImGui::Separator();
+        ImGui::Spacing();
+
         ImGui::Checkbox("NoSway", &g.g_NoSway);
         ImGui::Checkbox("Inf. Stamina", &g.g_InfStamina);
         ImGui::Checkbox("No FallDamage", &g.g_NoFallDmg);
+        ImGui::EndChild();
+        
+        ImGui::BeginChild("##LeftChild-1", ImVec2(ImGui::GetContentRegionAvail()), true);
+
+        ImGui::EndChild();
         break;
     case 2: // System
+        ImGui::BeginChild("##LeftChild-2-0", ImVec2(ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y / 3.f), true);
         ImGui::Text("System");
         ImGui::Separator();
         ImGui::Spacing();
+
         ImGui::Checkbox("StreamProof", &g.g_StreamProof);
 
-        ImGui::Spacing();
-        ImGui::NewLine();
+        ImGui::EndChild();
+        ImGui::BeginChild("##LeftChild-2-1", ImVec2(ImGui::GetContentRegionAvail()), true);
 
         ImGui::Text("Crosshair");
         ImGui::Separator();
@@ -86,6 +103,8 @@ void CFramework::RenderMenu()
         ImGui::CustomSliderInt("CrosshairSize", "##SizeCH", &g.g_CrosshairSize, 1, 10);
         ImGui::ColorEdit4("Color##C", &CrosshairColor.Value.x);
         ImGui::Combo("Type##C", &g.g_CrosshairType, CrosshairList, IM_ARRAYSIZE(CrosshairList));
+
+        ImGui::EndChild();
         break;
     default:
         break;
@@ -104,6 +123,8 @@ void CFramework::RenderMenu()
     switch (Index)
     {
     case 0: // Visual
+        ImGui::BeginChild("##RightChild-0", ImVec2(ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y / 2.5f), true);
+
         ImGui::Text("ESP Setting");
         ImGui::Separator();
         ImGui::Spacing();
@@ -116,8 +137,8 @@ void CFramework::RenderMenu()
 
         ImGui::Combo("BoxType", &g.g_ESP_BoxStyle, BoxTypeList, IM_ARRAYSIZE(BoxTypeList));
 
-        ImGui::NewLine();
-        ImGui::Spacing();
+        ImGui::EndChild();
+        ImGui::BeginChild("##RightChild-1", ImVec2(ImGui::GetContentRegionAvail()), true);
 
         ImGui::Text("ESP Colors");
         ImGui::Separator();
@@ -148,6 +169,8 @@ void CFramework::RenderMenu()
 
             ImGui::TreePop();
         }
+
+        ImGui::EndChild();
         break;
     case 1: // Misc
        
