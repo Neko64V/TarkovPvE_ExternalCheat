@@ -40,7 +40,7 @@ void CFramework::RenderMenu()
     switch (Index)
     {
     case 0: // Visual
-        ImGui::BeginChild("##LeftChild-0", ImVec2(ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y / 3.f), true);
+        ImGui::BeginChild("##C000", ImVec2(ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y / 3.f), true);
 
         ImGui::Text("Visual");
         ImGui::Separator();
@@ -52,7 +52,7 @@ void CFramework::RenderMenu()
         ImGui::Checkbox("Grenade ESP", &g.g_ESP_Grenade);
 
         ImGui::EndChild();
-        ImGui::BeginChild("##LeftChild-1", ImVec2(ImGui::GetContentRegionAvail()), true);
+        ImGui::BeginChild("##C001", ImVec2(ImGui::GetContentRegionAvail()), true);
 
         ImGui::Text("ESP Options");
         ImGui::Separator();
@@ -69,7 +69,7 @@ void CFramework::RenderMenu()
         ImGui::EndChild();
         break;
     case 1: // Misc
-        ImGui::BeginChild("##LeftChild-1-0", ImVec2(ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y / 3.f), true);
+        ImGui::BeginChild("##C010", ImVec2(ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y / 3.f), true);
 
         ImGui::Text("Misc");
         ImGui::Separator();
@@ -80,12 +80,12 @@ void CFramework::RenderMenu()
         ImGui::Checkbox("No FallDamage", &g.g_NoFallDmg);
         ImGui::EndChild();
         
-        ImGui::BeginChild("##LeftChild-1", ImVec2(ImGui::GetContentRegionAvail()), true);
+        ImGui::BeginChild("##C011", ImVec2(ImGui::GetContentRegionAvail()), true);
 
         ImGui::EndChild();
         break;
     case 2: // System
-        ImGui::BeginChild("##LeftChild-2-0", ImVec2(ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y / 3.f), true);
+        ImGui::BeginChild("##C020", ImVec2(ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y / 3.f), true);
         ImGui::Text("System");
         ImGui::Separator();
         ImGui::Spacing();
@@ -93,7 +93,7 @@ void CFramework::RenderMenu()
         ImGui::Checkbox("StreamProof", &g.g_StreamProof);
 
         ImGui::EndChild();
-        ImGui::BeginChild("##LeftChild-2-1", ImVec2(ImGui::GetContentRegionAvail()), true);
+        ImGui::BeginChild("##C021", ImVec2(ImGui::GetContentRegionAvail()), true);
 
         ImGui::Text("Crosshair");
         ImGui::Separator();
@@ -123,7 +123,7 @@ void CFramework::RenderMenu()
     switch (Index)
     {
     case 0: // Visual
-        ImGui::BeginChild("##RightChild-0", ImVec2(ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y / 2.5f), true);
+        ImGui::BeginChild("##C100", ImVec2(ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y / 2.5f), true);
 
         ImGui::Text("ESP Setting");
         ImGui::Separator();
@@ -138,7 +138,7 @@ void CFramework::RenderMenu()
         ImGui::Combo("BoxType", &g.g_ESP_BoxStyle, BoxTypeList, IM_ARRAYSIZE(BoxTypeList));
 
         ImGui::EndChild();
-        ImGui::BeginChild("##RightChild-1", ImVec2(ImGui::GetContentRegionAvail()), true);
+        ImGui::BeginChild("##C101", ImVec2(ImGui::GetContentRegionAvail()), true);
 
         ImGui::Text("ESP Colors");
         ImGui::Separator();
@@ -173,14 +173,20 @@ void CFramework::RenderMenu()
         ImGui::EndChild();
         break;
     case 1: // Misc
-       
+        ImGui::BeginChild("##C200", ImVec2(ImGui::GetContentRegionAvail()), true);
+
+        ImGui::EndChild();
         break;
     case 2: // System
+        ImGui::BeginChild("##C300", ImVec2(ImGui::GetContentRegionAvail()), true);
+
         ImGui::Text("Exit");
         ImGui::Separator();
         ImGui::Spacing();
         if (ImGui::Button("Exit", ImVec2(ImGui::GetContentRegionAvail().x, 30.f)))
             g.process_active = false;
+
+        ImGui::EndChild();
         break;
     default:
         break;
