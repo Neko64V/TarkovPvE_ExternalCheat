@@ -3,69 +3,77 @@
 std::vector<int> PlayerBoneList = { CGameBoneID::Pelvis, CGameBoneID::LeftThigh, CGameBoneID::LeftFoot, CGameBoneID::RightThigh,
 									CGameBoneID::RightFoot, CGameBoneID::LeftForearm, CGameBoneID::LeftPalm, CGameBoneID::RightForearm, CGameBoneID::RightPalm };
 
-bool CPlayer::GetEntity(uintptr_t& address)
+bool CPlayer::GetAddress(uintptr_t& ptr)
 {
-	ptr = address;
-	return ptr == NULL ? false : true;
+	address = ptr;
+	return address == NULL ? false : true;
 }
 
 bool CPlayer::Update()
 {
 	// BoneMatrix
-	m_pBoneMatrix = m.ReadChain(ptr, { offset::PlayerBody, 0x28, 0x28, 0x10 });
+	uintptr_t boneMatrix = m.ReadChain(address, { offset::PlayerBody, 0x28, 0x28, 0x10 });
+	bPointerList = m.Read<AllBonePointer>(boneMatrix + 0x20);
 
 	// Position
-	m_pVecLocation = GetBonePosition(Base);
+	m_vecLocation = GetBonePosition(Base);
 
-	if (Vec3_Empty(m_pVecLocation))
+	if (Vec3_Empty(m_vecLocation))
 		return false;
-
-	// Pointer
-	uintptr_t Profile = m.Read<uintptr_t>(ptr + offset::Profile);
-	uintptr_t Info = m.Read<uintptr_t>(Profile + 0x28);
-	uintptr_t Setting = m.Read<uintptr_t>(Info + 0x50);
-
-	m_pSpawnType = m.Read<int>(Setting + 0x10);
 
 	return true;
 }
 
+void CPlayer::UpdateStatic()
+{
+	// some pointers
+	uintptr_t m_pHealthController = m.Read<uintptr_t>(address + offset::HealthController);	// HealthController
+	uintptr_t m_pHealthBody = m.Read<uintptr_t>(m_pHealthController + 0x68);
+	m_pBodyController = m.Read<uintptr_t>(m_pHealthBody + 0x18);
+
+	m_pProfile = m.Read<uintptr_t>(address + offset::Profile);
+	m_pInfo = m.Read<uintptr_t>(m_pProfile + 0x28);
+	m_pSetting = m.Read<uintptr_t>(m_pInfo + 0x50);
+}
+
+int CPlayer::GetSpawnType()
+{
+	return m.Read<int>(m_pSetting + 0x10);
+}
+
 void CPlayer::UpdateHealth()
 {
-	uintptr_t m_pHealthController = m.Read<uintptr_t>(ptr + offset::HealthController);	// HealthController
-	uintptr_t m_pHealthBody = m.Read<uintptr_t>(m_pHealthController + 0x68);
-	uintptr_t m_pBodyController = m.Read<uintptr_t>(m_pHealthBody + 0x18);
-
-	m_pHealth = 0.f, m_pHealthMax = 0.f;
-
 	for (int j = 0; j < 7; j++)
 	{
 		uintptr_t body_part = m.Read<uintptr_t>(m_pBodyController + 0x30 + (j * 0x18));
 		uintptr_t health_container = m.Read<uintptr_t>(body_part + 0x10);
-		m_pHealth += m.Read<float>(health_container + 0x10);
-		m_pHealthMax += m.Read<float>(health_container + 0x14);
+		m_fHealth += m.Read<float>(health_container + 0x10);
+		m_fHealthMax += m.Read<float>(health_container + 0x14);
 	}
 }
 
 void CPlayer::UpdateBone()
 {
-	m_pHeadLocation = GetBonePosition(Head);
-	m_pNeckLocation = GetBonePosition(Neck);
+	m_vecHeadLocation = GetBonePosition(Head);
+	m_vecNeckLocation = GetBonePosition(Neck);
 
-	for (auto& id : PlayerBoneList)
+	if (g.g_ESP_Skeleton)
 	{
-		Vector3 bone = GetBonePosition(id);
+		for (auto& id : PlayerBoneList)
+		{
+			Vector3 bone = GetBonePosition(id);
 
-		if (Vec3_Empty(bone))
-			break;
+			if (Vec3_Empty(bone))
+				break;
 
-		m_pBoneList.push_back(bone);
+			m_pVecBoneList.push_back(bone);
+		}
 	}
 }
 
 uintptr_t  CPlayer::GetWeaponAnimation()
 {
-	return m.Read<uintptr_t>(ptr + offset::WeaponAnimation);
+	return m.Read<uintptr_t>(address + offset::WeaponAnimation);
 }
 
 bool  CPlayer::IsAiming()
@@ -73,10 +81,9 @@ bool  CPlayer::IsAiming()
 	return m.Read<bool>(GetWeaponAnimation() + 0x1bd);
 }
 
-Vector3 CPlayer::GetBonePosition(int BoneId)
+Vector3 CPlayer::GetBonePosition(const int BoneId)
 {
-	uintptr_t BasicBoneBase = m.Read<uintptr_t>(m_pBoneMatrix + 0x20 + (BoneId * 0x8));
-	uintptr_t BasicTransformPtr = m.Read<uintptr_t>(BasicBoneBase + 0x10);
+	uintptr_t TransformPtr = m.Read<uintptr_t>(bPointerList.address[BoneId] + 0x10);
 
-	return GetTransformPosition(BasicTransformPtr);
+	return GetTransformPosition(TransformPtr);
 }
